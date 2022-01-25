@@ -1,0 +1,28 @@
+﻿
+
+#loginImg {
+    height: 250px;
+    margin-left: 20px;
+    margin-top: 80px;
+}
+
+#loginCard {
+    border-radius: 10px;
+    margin-top: 100px;
+    height: 400px;
+    z-index: 3;
+}
+
+body {
+    background-color: /*#F2F2F2*/ #A9A4FF;
+    font-family: sans-serif;
+}
+
+#copyright {
+    z-index: 3;
+    margin-top: 123px;
+}
+
+/*#btnLogin {
+    background-color: #394EEA;
+}*/

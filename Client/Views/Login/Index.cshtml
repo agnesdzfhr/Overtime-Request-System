@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+
+}
+
+
+<!-- Outer Row -->
+<div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div id="loginCard" class="card o-hidden border-0 shadow-lg">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <img id="loginImg" src="~/img/undraw_login_re_4vu2.svg" />
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h3 class=" mb-4 font-weight-bold ">Overtime Request System</h3>
+                                <p class="text-gray-900 mb-4">Sign in to continue.</p>
+                            </div>
+                            <form id="accountLogin" action="Login/Auth" method="post" class="user">
+                                <div class="form-group">
+                                    <input type="email" name="Email" class="form-control form-control-user"
+                                           id="emailEmployee" aria-describedby="emailHelp"
+                                           placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="Password" class="form-control form-control-user"
+                                           id="passwordEmployee" placeholder="Password">
+                                </div>
+                                <button id="btnLogin" type="submit" class="btn btn-primary btn-user btn-block shadow" tabindex="4">
+                                    Login
+                                </button>
+                                <div class="row justify-content-center text-danger mt-2">
+                                    @TempData["message"]
+                                </div>
+                            </form>
+                            <div class="text-center">
+                                <a class="small" asp-area="" asp-controller="#" asp-action="">Forgot Password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
