@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class AddDb : Migration
+    public partial class addDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,9 +96,11 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsApprove = table.Column<bool>(type: "bit", nullable: false),
                     Overtime_ID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    OvertimeBonus_ID = table.Column<int>(type: "int", nullable: false)
+                    OvertimeBonus_ID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,7 +116,7 @@ namespace API.Migrations
                         column: x => x.OvertimeBonus_ID,
                         principalTable: "TB_M_OvertimeBonus",
                         principalColumn: "OvertimeBonus_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
