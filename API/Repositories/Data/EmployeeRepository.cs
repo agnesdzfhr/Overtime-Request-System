@@ -16,6 +16,27 @@ namespace API.Repositories.Data
         {
             this.myContext = myContext;
         }
+        public IEnumerable<Object> GetRegisteredData()
+        {
+            var query = from emp in myContext.Employees
+                        join dp in myContext.Departments
+                          on emp.Department_ID equals dp.Department_ID
+                        join acc in myContext.Accounts
+                          on emp.NIK equals acc.NIK
+                        join accr in myContext.AccountRoles
+                          on acc.Account_ID equals accr.Account_ID
+                        select new
+                        {
+                            NIK = emp.NIK,
+                            FullName = emp.FirstName + " " + emp.LastName,
+                            PhoneNumber = emp.Phone,
+                            Gender = emp.Gender.ToString(),
+                            Email = acc.Email,
+                            Salary = emp.Salary,
+                            Department_ID = dp.Department_ID 
+                        };
+            return query;
+        }
         public int Register(RegisterVM registerVM)//bikin pengecekan email dan nomorHp
         {
             var checkEmail = myContext.Accounts.Any(x => x.Email == registerVM.Email);
@@ -87,5 +108,6 @@ namespace API.Repositories.Data
                 return 0;
             }
         }
+        
     }
 }

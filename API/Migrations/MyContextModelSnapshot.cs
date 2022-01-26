@@ -190,7 +190,13 @@ namespace API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OvertimeBonus_ID")
+                    b.Property<bool>("IsApprove")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OvertimeBonus_ID")
                         .HasColumnType("int");
 
                     b.Property<string>("Overtime_ID")
@@ -281,9 +287,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.OvertimeBonus", "OvertimeBonus")
                         .WithMany("OvertimeSchedules")
-                        .HasForeignKey("OvertimeBonus_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OvertimeBonus_ID");
 
                     b.HasOne("API.Models.Overtime", "Overtime")
                         .WithMany("OvertimeSchedules")
