@@ -43,7 +43,7 @@ namespace API.Controllers
             }
             else
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Can't Insert Data, NIK Duplicate" }); ;
+                return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Can't Insert Data, NIK Duplicate" }); 
             }
         }
     }

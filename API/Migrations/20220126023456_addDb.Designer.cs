@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220125140643_AddDb")]
-    partial class AddDb
+    [Migration("20220126023456_addDb")]
+    partial class addDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,7 +192,13 @@ namespace API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OvertimeBonus_ID")
+                    b.Property<bool>("IsApprove")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OvertimeBonus_ID")
                         .HasColumnType("int");
 
                     b.Property<string>("Overtime_ID")
@@ -283,9 +289,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.OvertimeBonus", "OvertimeBonus")
                         .WithMany("OvertimeSchedules")
-                        .HasForeignKey("OvertimeBonus_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OvertimeBonus_ID");
 
                     b.HasOne("API.Models.Overtime", "Overtime")
                         .WithMany("OvertimeSchedules")
