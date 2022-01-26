@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Client.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
