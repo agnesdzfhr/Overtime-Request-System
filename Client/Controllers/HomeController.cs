@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Client.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,6 +21,11 @@ namespace Client.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult OvertimeRequest()
         {
             return View();
         }

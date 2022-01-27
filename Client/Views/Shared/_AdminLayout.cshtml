@@ -12,6 +12,8 @@
     <!-- Template CSS -->
     <title>@ViewData["Title"] - Overtime Request System</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
     <link rel="stylesheet" href="~/lib/assets/css/style.css">
     <link rel="stylesheet" href="~/lib/assets/css/components.css">
     <link rel="stylesheet" href="~/css/site.css" />
@@ -102,7 +104,7 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="~/lib/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                            <div class="d-sm-none d-lg-inline-block">Hi, <span id="userName"></span></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Logged in 5 min ago</div>
@@ -116,7 +118,7 @@
                                 <i class="fas fa-cog"></i> Settings
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item has-icon text-danger">
+                            <a href="Logout" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </div>
@@ -134,7 +136,7 @@
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
                         <li class="">
-                            <a  class="nav-link" href="Home/Index"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                            <a class="nav-link" href="Home/Index"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
                     </ul>
                 </aside>
@@ -146,7 +148,7 @@
                     @RenderBody()
                 </section>
             </div>
-            <footer id="copyright" class=" text-center footer align-bottom">
+            <footer id="copyright" class=" text-center footer mt-3">
                 <div class="container mb-2">
                     &copy; 2022 -  PT Mitra Integrasi Informatika. All Rights Reserved.
                 </div>
@@ -169,7 +171,16 @@
 
     <!-- Before -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

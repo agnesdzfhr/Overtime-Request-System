@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.Context;
 using API.Models;
 using API.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using static API.Repositories.Data.AccountRepository;
 
 namespace API.Repositories.Data
@@ -37,7 +39,43 @@ namespace API.Repositories.Data
                         };
             return query;
         }
-        public int Register(RegisterVM registerVM)//bikin pengecekan email dan nomorHp
+
+        public RegisterVM GetRegisteredData(string NIK)
+        {
+            var query = myContext.Employees.Where(e => e.NIK == NIK)
+                                        .Include(e=>e.Department)
+                                        .Include(e => e.Account)
+                                        .ThenInclude(a => a.AccountRoles)
+                                        .ThenInclude(ar => ar.Role)
+                                        .FirstOrDefault();
+
+            if (query == null)
+            {
+                return null;
+            }
+
+            var grd = new RegisterVM
+            {
+                NIK = query.NIK,
+                FirstName = query.FirstName,
+                LastName = query.LastName,
+                Gender = query.Gender,
+                Phone = query.Phone,
+                Salary = query.Salary,
+                //Gender = RegisterVM.GetGender((int)e.Gender),
+                Department = query.Department.Name,
+                Email = query.Account.Email,
+                //Password = query.Account.Password,
+                Role = query.Account.AccountRoles.Where(ar => ar.Account_ID == query.Account.Account_ID).Select(ar => ar.Role.Name).ToList()
+
+
+            };
+
+            return grd;
+        }
+
+
+        public HttpStatusCode Register(RegisterVM registerVM)//bikin pengecekan email dan nomorHp
         {
             var checkEmail = myContext.Accounts.Any(x => x.Email == registerVM.Email);
             var checkPhone = myContext.Employees.Any(x => x.Phone == registerVM.Phone);
@@ -69,11 +107,11 @@ namespace API.Repositories.Data
             }
             if (checkEmail)
             {
-                return 1;
+                return HttpStatusCode.Conflict;
             }
             else if (checkPhone)
             {
-                return 2;
+                return HttpStatusCode.BadRequest;
             }
             else
             {
@@ -84,8 +122,10 @@ namespace API.Repositories.Data
                     LastName = registerVM.LastName,
                     Phone = registerVM.Phone,
                     Salary = registerVM.Salary,
+                    WorkHourPerDay = 8,
+                    WorkDayPerMonth = 20,
                     Gender = registerVM.Gender,
-                    Department_ID = registerVM.Department_ID
+                    Department_ID = registerVM.Department
                 };
                 myContext.Employees.Add(emp);
                 myContext.SaveChanges();
@@ -105,7 +145,7 @@ namespace API.Repositories.Data
                 };
                 myContext.AccountRoles.Add(accountRole);
                 myContext.SaveChanges();
-                return 0;
+                return HttpStatusCode.OK;
             }
         }
         

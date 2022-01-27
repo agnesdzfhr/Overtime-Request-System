@@ -13,10 +13,9 @@ namespace API.Models
     {
         [Key]
         public string Overtime_ID { get; set; }
-        public string Type { get; set; }
-        public float CommisionPct { get; set; }
-        public DateTime MaxOvertime { get; set; }
+        public TimeSpan MaxOvertime { get; set; }
         [JsonIgnore]
-        public virtual ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
+
     }
 }

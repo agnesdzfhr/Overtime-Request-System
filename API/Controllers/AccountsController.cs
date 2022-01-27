@@ -42,8 +42,10 @@ namespace API.Controllers
 
                 switch (login)
                 {
-                    case 1:
+                    case HttpStatusCode.OK:
                         var getRoles = accountRepository.GetRoles(loginVM.Email);
+                        var findAcc = myContext.Accounts.FirstOrDefault(a => a.Email == loginVM.Email);
+                        var findEmp = myContext.Employees.FirstOrDefault(e=>e.NIK == findAcc.NIK);
 
                         var claims = new List<Claim>
                         {
@@ -66,13 +68,9 @@ namespace API.Controllers
                             );
                         var idToken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("TokenSecurity", idToken.ToString()));
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" });
-                    case 2:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Wrong Password" });
-                    case 3:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.NotFound, idtoken = null, message = "Email Not Found" });
+                        return Ok(new JWTtokenVM { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" , nik = findEmp.NIK, name = findEmp.FirstName +" "+ findEmp.LastName});
                     default:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Login Failed" });
+                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Email or Password Wrong", nik = "", name=""});
                 }
 
             }

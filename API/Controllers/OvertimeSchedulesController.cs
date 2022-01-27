@@ -30,11 +30,8 @@ namespace API.Controllers
             var request = overtimeScheduleRepository.OvertimeRequest(overtimeRequestVM);
             try
             {
-                if (request == 1)
-                {
-                    return Ok(HttpStatusCode.OK);
-                }
-                return Ok(HttpStatusCode.BadRequest);
+
+                return Ok(request);
             }
             catch (Exception e)
             {
