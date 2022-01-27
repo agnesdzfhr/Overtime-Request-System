@@ -63,14 +63,10 @@ namespace API.Context
                 .WithMany(os => os.EmployeeOvertimeSchedules);
 
             //One to Many
-            modelBuilder.Entity<OvertimeSchedule>()
-                .HasOne(os => os.Overtime)
-                .WithMany(o => o.OvertimeSchedules);
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Overtime)
+                .WithMany(o => o.Employees);
 
-            //One to Many
-            modelBuilder.Entity<OvertimeSchedule>()
-                .HasOne(os => os.OvertimeBonus)
-                .WithMany(ob => ob.OvertimeSchedules);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

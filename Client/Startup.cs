@@ -33,6 +33,7 @@ namespace Client
             services.AddMvc().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddScoped<AccountRepository>();
+            services.AddScoped<EmployeeRepository>();
             services.AddScoped<Address>();
 
             services.AddSession();

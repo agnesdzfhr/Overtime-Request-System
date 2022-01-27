@@ -18,8 +18,11 @@ namespace API.Models
         public Gender Gender { get; set; }
         public string Phone { get; set; }
         public float Salary { get; set; }
+        public int WorkHourPerDay { get; set; }
+        public int WorkDayPerMonth { get; set; }
         public string Department_ID { get; set; }
         public string Manager_ID { get; set; }
+        public string Overtime_ID { get; set; }
         [JsonIgnore]
         [ForeignKey("Department_ID")]
         public virtual Department Department { get; set; }
@@ -33,6 +36,13 @@ namespace API.Models
         public virtual Account Account { get; set; }
         [JsonIgnore]
         public virtual ICollection<EmployeeOvertimeSchedule> EmployeeOvertimeSchedules { get; set; }
+
+        [JsonIgnore]
+        [ForeignKey("Overtime_ID")]
+        public virtual Overtime Overtime { get; set; }
+
+
+
     }
     
 

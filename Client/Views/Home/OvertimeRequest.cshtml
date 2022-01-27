@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Overtime Request";
+    Layout = "_AdminLayout";
+}
+<div class="section-header d-flex justify-content-center shadow">
+    <h1>Overtime Request</h1>
+</div>
+<div class="section-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card navbar-bg text-light" style="height: 715px;">
+                <div class="card-title text-center mt-3 mb-2">Form Overtime</div>
+                <div class="card-body ">
+                    <form id="formOvertime" class="text-light">
+                        <div class="form-group">
+                            <label class="text-light">NIK</label>
+                            <input type="text" class="form-control" id="nikUser" value="" readonly>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="text-light">First Name</label>
+                                <input type="text" class="form-control" id="firstName" value="" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="text-light">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-light">Department</label>
+                            <input type="text" class="form-control" id="department" value="" readonly>
+                        </div>
+                            <div class="form-group">
+                                <label class="text-light">Date</label>
+                                <input type="date" class="form-control" id="date" value="">
+
+                            </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="text-light">Start Time</label>
+                                <input type="time" name="time" class="form-control" id="startTime" value="">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="text-light">End Time</label>
+                                <input type="time" name="time" class="form-control" id="endTime" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-light">Note Job</label>
+                            @*<textarea class="form-control" id="overtimeNote" rows="5" val=""></textarea>*@
+                            <textarea class="form-control" id="overtimeNote" rows="5" val=""></textarea>
+                        </div>
+                        <button id="buttonAdd" type="button" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form id="submitRequestOvertime">
+                <table id="tableSubmit" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Note Job</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="dateList"></td>
+                            <td id="startTimeList"></td>
+                            <td id="endTimeList"></td>
+                            <td id="noteJobList"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Overtime.js" asp-append-version="true"></script>
+}
