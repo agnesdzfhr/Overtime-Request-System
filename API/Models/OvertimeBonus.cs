@@ -12,9 +12,8 @@ namespace API.Models
     public class OvertimeBonus
     {
         [Key]
-        public int OvertimeBonus_ID { get; set; }
-        public float TotalBonus { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
+        public string OvertimeBonus_ID { get; set; }
+        public string Hour { get; set; }
+        public float CommisionPct { get; set; }
     }
 }

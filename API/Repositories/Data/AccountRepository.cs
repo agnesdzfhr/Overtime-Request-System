@@ -6,6 +6,7 @@ using API.Context;
 using API.Models;
 using Microsoft.Extensions.Configuration;
 using API.ViewModel;
+using System.Net;
 
 namespace API.Repositories.Data
 {
@@ -41,7 +42,7 @@ namespace API.Repositories.Data
 
         }
 
-        public int Login(LoginVM loginVM)
+        public HttpStatusCode Login(LoginVM loginVM)
         {
             var findEmail = myContext.Accounts.FirstOrDefault(a => a.Email == loginVM.Email);
 
@@ -51,16 +52,16 @@ namespace API.Repositories.Data
                 bool verifiedPass = Hashing.ValidatePassword(loginVM.Password, findNIK.Password);
                 if (verifiedPass == true)
                 {
-                    return 1; //Login Success
+                    return HttpStatusCode.OK; //Login Success
                 }
                 else
                 {
-                    return 2; //Wrong Password
+                    return HttpStatusCode.BadRequest; //Wrong Password
                 }
             }
             else
             {
-                return 3; //Email Not Found
+                return HttpStatusCode.BadRequest; //Email Not Found
             }
         }
     }

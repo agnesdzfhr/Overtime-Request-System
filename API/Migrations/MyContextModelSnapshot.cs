@@ -106,17 +106,28 @@ namespace API.Migrations
                     b.Property<string>("Manager_ID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Overtime_ID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Salary")
                         .HasColumnType("real");
 
+                    b.Property<int>("WorkDayPerMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkHourPerDay")
+                        .HasColumnType("int");
+
                     b.HasKey("NIK");
 
                     b.HasIndex("Department_ID");
 
                     b.HasIndex("Manager_ID");
+
+                    b.HasIndex("Overtime_ID");
 
                     b.ToTable("TB_M_Employee");
                 });
@@ -148,14 +159,8 @@ namespace API.Migrations
                     b.Property<string>("Overtime_ID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("CommisionPct")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("MaxOvertime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<TimeSpan>("MaxOvertime")
+                        .HasColumnType("time");
 
                     b.HasKey("Overtime_ID");
 
@@ -164,13 +169,14 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.OvertimeBonus", b =>
                 {
-                    b.Property<int>("OvertimeBonus_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("OvertimeBonus_ID")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("TotalBonus")
+                    b.Property<float>("CommisionPct")
                         .HasColumnType("real");
+
+                    b.Property<string>("Hour")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OvertimeBonus_ID");
 
@@ -184,11 +190,11 @@ namespace API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<string>("EndTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsApprove")
                         .HasColumnType("bit");
@@ -196,20 +202,13 @@ namespace API.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OvertimeBonus_ID")
-                        .HasColumnType("int");
+                    b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Overtime_ID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<float>("TotalBonus")
+                        .HasColumnType("real");
 
                     b.HasKey("OvertimeSchedule_ID");
-
-                    b.HasIndex("OvertimeBonus_ID");
-
-                    b.HasIndex("Overtime_ID");
 
                     b.ToTable("TB_M_OvertimeSchedule");
                 });
@@ -261,9 +260,15 @@ namespace API.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("Manager_ID");
 
+                    b.HasOne("API.Models.Overtime", "Overtime")
+                        .WithMany("Employees")
+                        .HasForeignKey("Overtime_ID");
+
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("Overtime");
                 });
 
             modelBuilder.Entity("API.Models.EmployeeOvertimeSchedule", b =>
@@ -281,21 +286,6 @@ namespace API.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("OvertimeSchedule");
-                });
-
-            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
-                {
-                    b.HasOne("API.Models.OvertimeBonus", "OvertimeBonus")
-                        .WithMany("OvertimeSchedules")
-                        .HasForeignKey("OvertimeBonus_ID");
-
-                    b.HasOne("API.Models.Overtime", "Overtime")
-                        .WithMany("OvertimeSchedules")
-                        .HasForeignKey("Overtime_ID");
-
-                    b.Navigation("Overtime");
-
-                    b.Navigation("OvertimeBonus");
                 });
 
             modelBuilder.Entity("API.Models.Account", b =>
@@ -319,12 +309,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Overtime", b =>
                 {
-                    b.Navigation("OvertimeSchedules");
-                });
-
-            modelBuilder.Entity("API.Models.OvertimeBonus", b =>
-                {
-                    b.Navigation("OvertimeSchedules");
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("API.Models.OvertimeSchedule", b =>

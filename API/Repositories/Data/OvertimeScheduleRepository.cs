@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.Context;
 using API.Models;
@@ -16,25 +17,25 @@ namespace API.Repositories.Data
         {
             this.myContext = myContext;
         }
-        public int OvertimeRequest(OvertimeRequestVM overtimeRequestVM)
+        public HttpStatusCode OvertimeRequest(OvertimeRequestVM overtimeRequestVM)
         {
-            var os = new OvertimeSchedule
-            {
-                StartDate = overtimeRequestVM.StartDate,
-                EndDate = overtimeRequestVM.EndDate,
-                Note = overtimeRequestVM.Note
+            //var findOvertimeType = myContext.Overtimes.Select(o => o.Overtime_ID).FirstOrDefault();
 
-            };
-            myContext.OvertimesSchedules.Add(os);
+            List<OvertimeSchedule> os = overtimeRequestVM.OvertimeSchedules;
+            myContext.OvertimesSchedules.AddRange(os);
             myContext.SaveChanges();
-            var eos = new EmployeeOvertimeSchedule
+            List<int> osIdList =  os.Select(os => os.OvertimeSchedule_ID).ToList() ;
+            foreach (var id in osIdList)
             {
-                OvertimeSchedule_ID = os.OvertimeSchedule_ID,
-                NIK = overtimeRequestVM.NIK,
-            };
-            myContext.EmployeeOvertimeSchedules.Add(eos);
+                var osId = new EmployeeOvertimeSchedule
+                {
+                    OvertimeSchedule_ID = id,
+                    NIK = overtimeRequestVM.NIK
+                };
+                myContext.EmployeeOvertimeSchedules.Add(osId);
+            }
             myContext.SaveChanges();
-            return 1;
+            return HttpStatusCode.OK;
         }
     }
 }

@@ -8,6 +8,7 @@ using Client.Repositories.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using API.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Client.Controllers
 {
@@ -30,6 +31,7 @@ namespace Client.Controllers
         {
             var jwtToken = await repository.Auth(loginVM);
             var token = jwtToken.idtoken;
+            var nik = jwtToken.nik;
 
             if (token == null)
             {
@@ -40,8 +42,16 @@ namespace Client.Controllers
             }
 
             HttpContext.Session.SetString("JWToken", token);
-
+            HttpContext.Session.SetString("NIK", nik);
             return RedirectToAction("index", "Home");
+        }
+
+        [Authorize]
+        [HttpGet("Logout/")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "Login");
         }
     }
 }
