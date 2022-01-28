@@ -13,8 +13,6 @@ function toDate(dStr, format) {
 function submitOvertime() {
 
     var nik = $('#nikUser').val();
-
-
     var obj = new Object();
     obj.NIK = nik;
     obj.OvertimeSchedules = listRequest;
@@ -28,12 +26,22 @@ function submitOvertime() {
         data: objJson,
         contentType: "application/json;charset=utf-8"
     }).done((result) => {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: "Request Success",
-            type: 'success'
-        });
+        if (result == 200) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "Request Success",
+                type: 'success'
+            });
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Error, U Dont Have Manager!!",
+                type: 'error'
+            });
+        }
     }).fail((error) => {
         console.log(error);
         Swal.fire({

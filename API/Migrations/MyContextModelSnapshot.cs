@@ -132,28 +132,6 @@ namespace API.Migrations
                     b.ToTable("TB_M_Employee");
                 });
 
-            modelBuilder.Entity("API.Models.EmployeeOvertimeSchedule", b =>
-                {
-                    b.Property<int>("EmployeeOvertimeSchedule_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NIK")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("OvertimeSchedule_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeeOvertimeSchedule_ID");
-
-                    b.HasIndex("NIK");
-
-                    b.HasIndex("OvertimeSchedule_ID");
-
-                    b.ToTable("TB_TR_EmployeeOvertimeSchedule");
-                });
-
             modelBuilder.Entity("API.Models.Overtime", b =>
                 {
                     b.Property<string>("Overtime_ID")
@@ -199,6 +177,9 @@ namespace API.Migrations
                     b.Property<bool>("IsApprove")
                         .HasColumnType("bit");
 
+                    b.Property<string>("NIK")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
@@ -209,6 +190,8 @@ namespace API.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("OvertimeSchedule_ID");
+
+                    b.HasIndex("NIK");
 
                     b.ToTable("TB_M_OvertimeSchedule");
                 });
@@ -271,21 +254,13 @@ namespace API.Migrations
                     b.Navigation("Overtime");
                 });
 
-            modelBuilder.Entity("API.Models.EmployeeOvertimeSchedule", b =>
+            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
                 {
                     b.HasOne("API.Models.Employee", "Employee")
-                        .WithMany("EmployeeOvertimeSchedules")
+                        .WithMany("OvertimeSchedules")
                         .HasForeignKey("NIK");
 
-                    b.HasOne("API.Models.OvertimeSchedule", "OvertimeSchedule")
-                        .WithMany("EmployeeOvertimeSchedules")
-                        .HasForeignKey("OvertimeSchedule_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Employee");
-
-                    b.Navigation("OvertimeSchedule");
                 });
 
             modelBuilder.Entity("API.Models.Account", b =>
@@ -302,19 +277,14 @@ namespace API.Migrations
                 {
                     b.Navigation("Account");
 
-                    b.Navigation("EmployeeOvertimeSchedules");
-
                     b.Navigation("Employees");
+
+                    b.Navigation("OvertimeSchedules");
                 });
 
             modelBuilder.Entity("API.Models.Overtime", b =>
                 {
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
-                {
-                    b.Navigation("EmployeeOvertimeSchedules");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
