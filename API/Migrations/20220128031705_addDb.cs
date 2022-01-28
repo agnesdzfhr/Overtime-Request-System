@@ -45,24 +45,6 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_OvertimeSchedule",
-                columns: table => new
-                {
-                    OvertimeSchedule_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EndTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsApprove = table.Column<bool>(type: "bit", nullable: false),
-                    TotalBonus = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TB_M_OvertimeSchedule", x => x.OvertimeSchedule_ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TB_M_Role",
                 columns: table => new
                 {
@@ -137,29 +119,28 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_TR_EmployeeOvertimeSchedule",
+                name: "TB_M_OvertimeSchedule",
                 columns: table => new
                 {
-                    EmployeeOvertimeSchedule_ID = table.Column<int>(type: "int", nullable: false)
+                    OvertimeSchedule_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OvertimeSchedule_ID = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsApprove = table.Column<bool>(type: "bit", nullable: false),
+                    TotalBonus = table.Column<float>(type: "real", nullable: false),
                     NIK = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_TR_EmployeeOvertimeSchedule", x => x.EmployeeOvertimeSchedule_ID);
+                    table.PrimaryKey("PK_TB_M_OvertimeSchedule", x => x.OvertimeSchedule_ID);
                     table.ForeignKey(
-                        name: "FK_TB_TR_EmployeeOvertimeSchedule_TB_M_Employee_NIK",
+                        name: "FK_TB_M_OvertimeSchedule_TB_M_Employee_NIK",
                         column: x => x.NIK,
                         principalTable: "TB_M_Employee",
                         principalColumn: "NIK",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TB_TR_EmployeeOvertimeSchedule_TB_M_OvertimeSchedule_OvertimeSchedule_ID",
-                        column: x => x.OvertimeSchedule_ID,
-                        principalTable: "TB_M_OvertimeSchedule",
-                        principalColumn: "OvertimeSchedule_ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,6 +192,11 @@ namespace API.Migrations
                 column: "Overtime_ID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_M_OvertimeSchedule_NIK",
+                table: "TB_M_OvertimeSchedule",
+                column: "NIK");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_TR_AccountRole_Account_ID",
                 table: "TB_TR_AccountRole",
                 column: "Account_ID");
@@ -219,16 +205,6 @@ namespace API.Migrations
                 name: "IX_TB_TR_AccountRole_Role_ID",
                 table: "TB_TR_AccountRole",
                 column: "Role_ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TB_TR_EmployeeOvertimeSchedule_NIK",
-                table: "TB_TR_EmployeeOvertimeSchedule",
-                column: "NIK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TB_TR_EmployeeOvertimeSchedule_OvertimeSchedule_ID",
-                table: "TB_TR_EmployeeOvertimeSchedule",
-                column: "OvertimeSchedule_ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -237,19 +213,16 @@ namespace API.Migrations
                 name: "TB_M_OvertimeBonus");
 
             migrationBuilder.DropTable(
-                name: "TB_TR_AccountRole");
+                name: "TB_M_OvertimeSchedule");
 
             migrationBuilder.DropTable(
-                name: "TB_TR_EmployeeOvertimeSchedule");
+                name: "TB_TR_AccountRole");
 
             migrationBuilder.DropTable(
                 name: "TB_M_Account");
 
             migrationBuilder.DropTable(
                 name: "TB_M_Role");
-
-            migrationBuilder.DropTable(
-                name: "TB_M_OvertimeSchedule");
 
             migrationBuilder.DropTable(
                 name: "TB_M_Employee");

@@ -79,30 +79,30 @@ namespace API.Repositories.Data
         {
             var checkEmail = myContext.Accounts.Any(x => x.Email == registerVM.Email);
             var checkPhone = myContext.Employees.Any(x => x.Phone == registerVM.Phone);
-            var increamentEmp = myContext.Employees.ToList().Count;
-            var increamentAcc = myContext.Accounts.ToList().Count;
+            var incrementEmp = myContext.Employees.ToList().Count;
+            var incrementAcc = myContext.Accounts.ToList().Count;
             var formattedNIK = "";
-            if (increamentEmp == 0)
+            if (incrementEmp == 0)
             {
-                formattedNIK = DateTime.Now.Year.ToString() + "0" + (increamentEmp + 1).ToString();
+                formattedNIK = DateTime.Now.Year.ToString() + "0" + (incrementEmp + 1).ToString();
 
             }
             else
             {
-                var increamentEmp2 = myContext.Employees.ToList().Max(e => e.NIK);
-                formattedNIK = (Int32.Parse(increamentEmp2) + 1).ToString();
+                var incrementEmp2 = myContext.Employees.ToList().Max(e => e.NIK);
+                formattedNIK = (Int32.Parse(incrementEmp2) + 1).ToString();
 
             }
             var formattedAccID = "";
-            if (increamentAcc == 0)
+            if (incrementAcc == 0)
             {
-                formattedAccID = "A" + "0" + (increamentAcc + 1).ToString();
+                formattedAccID = 1000 + (incrementAcc + 1).ToString();
 
             }
             else
             {
-                var increamentAcc2 = myContext.Employees.ToList().Max(e => e.NIK);
-                formattedAccID = (Int32.Parse(increamentAcc2) + 1).ToString();
+                var incrementAcc2 = myContext.Accounts.ToList().Max(a=> a.Account_ID);
+                formattedAccID = (Int32.Parse(incrementAcc2) + 1).ToString();
 
             }
             if (checkEmail)

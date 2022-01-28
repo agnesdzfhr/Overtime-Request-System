@@ -15,7 +15,6 @@ namespace API.Context
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<EmployeeOvertimeSchedule> EmployeeOvertimeSchedules { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountRole> AccountRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -53,14 +52,9 @@ namespace API.Context
                 .WithMany(r => r.AccountRoles);
 
             //One to Many
-            modelBuilder.Entity<EmployeeOvertimeSchedule>()
-                .HasOne(eo => eo.Employee)
-                .WithMany(e => e.EmployeeOvertimeSchedules);
-
-            //One to Many
-            modelBuilder.Entity<EmployeeOvertimeSchedule>()
-                .HasOne(eo => eo.OvertimeSchedule)
-                .WithMany(os => os.EmployeeOvertimeSchedules);
+            modelBuilder.Entity<OvertimeSchedule>()
+                .HasOne(os => os.Employee)
+                .WithMany(e => e.OvertimeSchedules);
 
             //One to Many
             modelBuilder.Entity<Employee>()
