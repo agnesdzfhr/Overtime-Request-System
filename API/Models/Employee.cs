@@ -35,7 +35,7 @@ namespace API.Models
         [JsonIgnore]
         public virtual Account Account { get; set; }
         [JsonIgnore]
-        public virtual ICollection<EmployeeOvertimeSchedule> EmployeeOvertimeSchedules { get; set; }
+        public virtual ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
 
         [JsonIgnore]
         [ForeignKey("Overtime_ID")]

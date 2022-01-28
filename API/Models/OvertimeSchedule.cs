@@ -22,9 +22,11 @@ namespace API.Models
         public string Note { get; set; }
         public bool IsApprove { get; set; }
         public float TotalBonus { get; set; }
+        public string NIK { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<EmployeeOvertimeSchedule> EmployeeOvertimeSchedules { get; set; }
+        [ForeignKey("NIK")]
+        public virtual Employee Employee { get; set; }
         
     }
 }
