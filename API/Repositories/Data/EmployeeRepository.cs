@@ -125,8 +125,7 @@ namespace API.Repositories.Data
                     WorkHourPerDay = 8,
                     WorkDayPerMonth = 20,
                     Gender = registerVM.Gender,
-                    Department_ID = registerVM.Department,
-                    Overtime_ID = "O01"
+                    Department_ID = registerVM.Department
                 };
                 myContext.Employees.Add(emp);
                 myContext.SaveChanges();

@@ -39,20 +39,5 @@ namespace API.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-        [HttpGet("GetForManager/{nik}")]
-        public ActionResult GetForManager(string NIK)
-        {
-            var response = overtimeScheduleRepository.GetForManager(NIK);
-            try
-            {
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(e.Message);
-            }
-        }
     }
 }
