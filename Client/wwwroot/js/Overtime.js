@@ -88,7 +88,7 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: "https://localhost:44388/API/Overtimes/O01",
+            url: "https://localhost:44388/API/OvertimeLimits/OL01",
             type: "GET"
         }).done((result) => {
             var minus = timeDateEnd - timeDateStart;
