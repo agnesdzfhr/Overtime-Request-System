@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Data
 {
-    public class OvertimeScheduleRepository : GeneralRepository<MyContext, OvertimeSchedule, int>
+    public class OvertimeScheduleRepository : GeneralRepository<MyContext, OvertimeRequest, int>
     {
         public readonly MyContext myContext;
         public OvertimeScheduleRepository(MyContext myContext) : base(myContext)
@@ -22,9 +22,9 @@ namespace API.Repositories.Data
         public HttpStatusCode OvertimeRequest(OvertimeRequestVM overtimeRequestVM)
         {
             var findEmployee = myContext.Employees.Where(e => e.NIK == overtimeRequestVM.NIK).FirstOrDefault();
-            var findManager = myContext.Employees.Where(e => e.NIK == findEmployee.Manager_ID).FirstOrDefault();
+            var findManager = myContext.Employees.Where(e => e.NIK == findEmployee.ManagerID).FirstOrDefault();
 
-            List<OvertimeSchedule> os = overtimeRequestVM.OvertimeSchedules;
+            List<OvertimeRequest> os = overtimeRequestVM.OvertimeSchedules;
             foreach (var item in os)
             {
                 item.NIK = overtimeRequestVM.NIK;
@@ -50,29 +50,49 @@ namespace API.Repositories.Data
             }
         }
 
-        public IEnumerable<Object> GetForManager(string NIK)
+        public IEnumerable<OvertimeSchedulesVM> GetForManager(string NIK)
         {
             //var findManager = myContext.Employees.Where( m => m.NIK == NIK).FirstOrDefault();
-            var findListEmployee = myContext.OvertimesSchedules.Include(os => os.Employee).Where(e => e.Employee.Manager_ID == NIK).ToList();
+            var findListEmployee = myContext.OvertimesSchedules.Include(os => os.Employee).Where(e => e.Employee.ManagerID == NIK).ToList();
 
             var listResult = new List<OvertimeSchedulesVM>();
             foreach (var item in findListEmployee)
             {
                 var result = new OvertimeSchedulesVM
                 {
+                    OvertimeSchedule_ID = item.OvertimeRequestID,
                     NIK = item.NIK,
                     FullName = $"{item.Employee.FirstName} {item.Employee.LastName}",
                     Date = item.Date,
                     StartTime = item.StartTime,
                     EndTime = item.EndTime,
-                    Note = item.Note
+                    Note = item.JobNote
 
                 };
 
                 listResult.Add(result);
             }
 
-            return listResult;
+            var listResultDescending = listResult.OrderByDescending(lr => lr.OvertimeSchedule_ID).ToList();
+
+            return listResultDescending;
+        }
+
+        public OvertimeSchedulesVM GetOvertimeScheduleByID(int ID)
+        {
+            var findOvertimeSchedule = myContext.OvertimesSchedules.Include(os => os.Employee).Where(e => e.OvertimeRequestID == ID).FirstOrDefault();
+                var result = new OvertimeSchedulesVM
+                {
+                    OvertimeSchedule_ID = findOvertimeSchedule.OvertimeRequestID,
+                    NIK = findOvertimeSchedule.NIK,
+                    FullName = $"{findOvertimeSchedule.Employee.FirstName} {findOvertimeSchedule.Employee.LastName}",
+                    Date = findOvertimeSchedule.Date,
+                    StartTime = findOvertimeSchedule.StartTime,
+                    EndTime = findOvertimeSchedule.EndTime,
+                    Note = findOvertimeSchedule.JobNote
+
+                };
+            return result;
         }
 
         public static void SendEmail(string toEmail, string subjectEmail, string bodyEmail)

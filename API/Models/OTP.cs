@@ -8,19 +8,17 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_TR_AccountRole")]
-    public class AccountRole
+    [Table("TB_M_OTP")]
+    public class OTP
     {
         [Key]
-        public int AccountRoleID { get; set; }
-        public string RoleID { get; set; }
+        public int OtpID { get; set; }
+        public int TokenOTP { get; set; }
+        public DateTime ExpiredToken { get; set; }
+        public bool? IsUsed { get; set; }
         public string AccountID { get; set; }
-        [JsonIgnore]
-        [ForeignKey("RoleID")]
-        public virtual Role Role { get; set; }
         [JsonIgnore]
         [ForeignKey("AccountID")]
         public virtual Account Account { get; set; }
-        
     }
 }

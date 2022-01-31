@@ -46,6 +46,8 @@ $(document).ready(function () {
     });
 });
 
+
+
 function getDetail(link) {
     $.ajax({
         url: link

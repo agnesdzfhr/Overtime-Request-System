@@ -10,6 +10,8 @@ function toDate(dStr, format) {
         return "Invalid Format";
 }
 
+
+
 function submitOvertime() {
 
     var nik = $('#nikUser').val();
@@ -33,6 +35,8 @@ function submitOvertime() {
                 text: "Request Success",
                 type: 'success'
             });
+            $("table tbody").empty();
+            listRequest = [];
         }
         else {
             Swal.fire({
@@ -111,7 +115,7 @@ $(document).ready(function () {
             }
             else {
 
-                var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + noteJobList + "</td><td>";
+                var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + noteJobList + "</td>";
                 $("table tbody").append(row);
 
                 var objData = new Object();
@@ -121,7 +125,9 @@ $(document).ready(function () {
                 objData.note = noteJobList;
                 console.log(objData);
                 listRequest.push(objData);
-                //console.log(dummy);
+                //MASIH GAGAL
+                //$(".formOvertime").trigger("reset"); //reset form
+                $(".input").val(""); //reset form
             }
 
         }).fail((error) => {

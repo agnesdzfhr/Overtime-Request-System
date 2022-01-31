@@ -1,26 +1,48 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>@ViewData["Title"] - Overtime Request System</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/Account.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/lib/assets/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/fontawesome/css/all.min.css">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/lib/assets/modules/bootstrap-social/bootstrap-social.css">
+
+    <!-- Template CSS -->
+
+    <link rel="stylesheet" href="~/css/Account.css">
+    <link rel="stylesheet" href="~/lib/assets/css/style.css">
+    <link rel="stylesheet" href="~/lib/assets/css/components.css">
+
 </head>
 <body>
     <div class="container">
-            @RenderBody()
+        @RenderBody()
     </div>
 
     <footer class=" text-center footer align-bottom">
-        <div class="container mb-2">
+        <div class="simple-footer">
             &copy; 2022 -  PT Mitra Integrasi Informatika. All Rights Reserved.
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/Account.js" asp-append-version="true"></script>
+    <script src="~/lib/assets/modules/jquery.min.js"></script>
+    <script src="~/lib/assets/modules/popper.js"></script>
+    <script src="~/lib/assets/modules/tooltip.js"></script>
+    <script src="~/lib/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="~/lib/assets/modules/moment.min.js"></script>
+    <script src="~/lib/assets/js/stisla.js"></script>
+
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <!-- Template JS File -->
+    <script src="~/lib/assets/js/scripts.js"></script>
+    <script src="~/lib/assets/js/custom.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

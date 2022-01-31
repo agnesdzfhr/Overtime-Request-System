@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using API.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Client.Controllers
 {
@@ -31,7 +32,6 @@ namespace Client.Controllers
         {
             var jwtToken = await repository.Auth(loginVM);
             var token = jwtToken.idtoken;
-            var nik = jwtToken.nik;
 
             if (token == null)
             {
@@ -40,6 +40,10 @@ namespace Client.Controllers
                 return RedirectToAction("index", "Login"); //untuk return ke halaman Employees/Login.cshtml
 
             }
+            var handler = new JwtSecurityTokenHandler();
+            var decodedValue = handler.ReadJwtToken(token);
+
+            var nik = decodedValue.Claims.First(c => c.Type == "nik").Value;
 
             HttpContext.Session.SetString("JWToken", token);
             HttpContext.Session.SetString("NIK", nik);

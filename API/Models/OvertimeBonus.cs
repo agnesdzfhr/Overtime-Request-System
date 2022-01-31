@@ -12,7 +12,7 @@ namespace API.Models
     public class OvertimeBonus
     {
         [Key]
-        public string OvertimeBonus_ID { get; set; }
+        public string OvertimeBonusID { get; set; }
         public string Hour { get; set; }
         public float CommisionPct { get; set; }
     }

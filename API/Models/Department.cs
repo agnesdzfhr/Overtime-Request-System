@@ -13,7 +13,7 @@ namespace API.Models
     public class Department
     {
         [Key]
-        public string Department_ID { get; set; }
+        public string DepartmentID { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }

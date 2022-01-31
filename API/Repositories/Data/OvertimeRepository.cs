@@ -7,9 +7,9 @@ using API.Models;
 
 namespace API.Repositories.Data
 {
-    public class OvertimeRepository : GeneralRepository<MyContext, Overtime, string>
+    public class OvertimeLimitRepository : GeneralRepository<MyContext, OvertimeLimit, string>
     {
-        public OvertimeRepository(MyContext myContext) : base(myContext)
+        public OvertimeLimitRepository(MyContext myContext) : base(myContext)
         {
 
         }

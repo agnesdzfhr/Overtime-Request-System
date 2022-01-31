@@ -12,7 +12,7 @@ namespace API.Models
     public class Role
     {
         [Key]
-        public string Role_ID { get; set; }
+        public string RoleID { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
         public virtual ICollection<AccountRole> AccountRoles { get; set; }

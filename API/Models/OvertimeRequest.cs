@@ -8,24 +8,28 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_OvertimeSchedule")]
-    public class OvertimeSchedule
+    [Table("TB_M_OvertimeRequest")]
+    public class OvertimeRequest
     {
         [Key]
-        public int OvertimeSchedule_ID { get; set; }
+        public int OvertimeRequestID { get; set; }
         //public DateTime StartDate { get; set; }
         //public DateTime EndDate { get; set; }
         public DateTime Date { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public string Note { get; set; }
-        public bool IsApprove { get; set; }
-        public float TotalBonus { get; set; }
+        public string JobNote { get; set; }
         public string NIK { get; set; }
 
         [JsonIgnore]
         [ForeignKey("NIK")]
         public virtual Employee Employee { get; set; }
-        
+
+        [JsonIgnore]
+        public virtual FinanceValidation FinanceValidation { get; set; }
+
+        [JsonIgnore]
+        public virtual ManagerApproval ManagerApproval { get; set; }
+
     }
 }

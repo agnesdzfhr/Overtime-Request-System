@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace Client.Controllers
 {
-    public class ManagerController : Controller
+    public class EmployeeRequestController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Test()
         {
             return View();
         }

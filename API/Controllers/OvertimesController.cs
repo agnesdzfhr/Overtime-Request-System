@@ -12,10 +12,10 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OvertimesController : BaseController<Overtime, OvertimeRepository, string>
+    public class OvertimeLimitsController : BaseController<OvertimeLimit, OvertimeLimitRepository, string>
     {
-        private readonly OvertimeRepository overtimeRepository;
-        public OvertimesController(OvertimeRepository overtimeRepository) : base(overtimeRepository)
+        private readonly OvertimeLimitRepository overtimeRepository;
+        public OvertimeLimitsController(OvertimeLimitRepository overtimeRepository) : base(overtimeRepository)
         {
             this.overtimeRepository = overtimeRepository;
         }

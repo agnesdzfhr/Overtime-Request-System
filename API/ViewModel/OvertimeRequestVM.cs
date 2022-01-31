@@ -11,7 +11,7 @@ namespace API.ViewModel
         public string NIK { get; set; }
 
         //public ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
-        public List<OvertimeSchedule> OvertimeSchedules { get; set; }
+        public List<OvertimeRequest> OvertimeSchedules { get; set; }
 
 
 

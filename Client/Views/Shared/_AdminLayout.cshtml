@@ -1,35 +1,31 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Blank Page &mdash; Stisla</title>
+    <title>Blank Page — Stisla</title>
 
     <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/lib/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/lib/assets/modules/fontawesome/css/all.min.css">
 
     <!-- CSS Libraries -->
     <!-- Template CSS -->
-    <title>@ViewData["Title"] - Overtime Request System</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-   
-
     <link rel="stylesheet" href="~/lib/assets/css/style.css">
     <link rel="stylesheet" href="~/lib/assets/css/components.css">
-    <link rel="stylesheet" href="~/css/site.css" />
     <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-94034622-3');
-    </script>
+        gtag('config', 'UA-94034622-3');</script>
+    <!-- /END GA -->
 </head>
-<body>
 
+<body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
             <div class="navbar-bg"></div>
@@ -126,37 +122,73 @@
                     </li>
                 </ul>
             </nav>
-            <div class="main-sidebar sidebar-style-2">
+            <div class="main-sidebar sidebar-style-2" tabindex="1" style="overflow: hidden; outline: none;">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">Stisla</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Overtime Request</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">St</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">OR</a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class="">
-                            <a class="nav-link" href="Home/Index"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
-                    </ul>
+                        <li class="menu-header">Menu</li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i><span>Menu</span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a asp-area="" asp-controller="RequestForm" asp-action="Index" class="nav-link"><span>Request Form</span></a>
+                                </li>
+                                @if ((User.IsInRole("Manager"))|| (User.IsInRole("Admin")))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="ValidateRequest" class="nav-link"><span>Validate Request</span></a>
+                                    </li>
+                                }
+                                @if ((User.IsInRole("Finance")) || (User.IsInRole("Admin")))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="AcceptRequest" class="nav-link"><span>Accept Request</span></a>
+                                    </li>
+                                }
+                                <li>
+                                    <a asp-area="" asp-controller="Home" asp-action="AcceptRequest" class="nav-link"><span>Overtime Request History</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="menu-header">Manage APP</li>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="ManageUser" class="nav-link"><i class="far fa-user"></i><span>Manage User</span></a>
+                            </li>
+                        }
+
+
+                        </ul>
                 </aside>
             </div>
 
             <!-- Main Content -->
-            <div class="main-content">
-                <section class="section">
-                    @RenderBody()
-                </section>
+            <div class="main-content" style="min-height: 562px;">
+                @RenderBody()
             </div>
-            <footer id="copyright" class=" text-center footer mt-3">
-                <div class="container mb-2">
+            <footer class="main-footer">
+                <div class="text-center">
                     &copy; 2022 -  PT Mitra Integrasi Informatika. All Rights Reserved.
+                </div>
+                <div class="footer-right">
+
                 </div>
             </footer>
         </div>
     </div>
 
+    <!-- General JS Scripts -->
+    <script src="~/lib/assets/modules/jquery.min.js"></script>
     <script src="~/lib/assets/modules/popper.js"></script>
     <script src="~/lib/assets/modules/tooltip.js"></script>
     <script src="~/lib/assets/modules/bootstrap/js/bootstrap.min.js"></script>
@@ -170,19 +202,19 @@
     <script src="~/lib/assets/js/scripts.js"></script>
     <script src="~/lib/assets/js/custom.js"></script>
 
-    
-    <!-- Before -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.js"></script>
+
     @RenderSection("Scripts", required: false)
+
+    <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: 892; cursor: default; position: fixed; top: 0px; left: 242px; height: 657px; opacity: 0;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 432px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: 892; top: 649px; left: 0px; position: fixed; cursor: default; display: none; width: 242px; opacity: 0;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 250px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;"></div></div>
 </body>
 </html>

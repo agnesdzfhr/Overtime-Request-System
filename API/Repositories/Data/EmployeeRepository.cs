@@ -22,11 +22,11 @@ namespace API.Repositories.Data
         {
             var query = from emp in myContext.Employees
                         join dp in myContext.Departments
-                          on emp.Department_ID equals dp.Department_ID
+                          on emp.DepartmentID equals dp.DepartmentID
                         join acc in myContext.Accounts
                           on emp.NIK equals acc.NIK
                         join accr in myContext.AccountRoles
-                          on acc.Account_ID equals accr.Account_ID
+                          on acc.AccountID equals accr.AccountID
                         select new
                         {
                             NIK = emp.NIK,
@@ -35,7 +35,7 @@ namespace API.Repositories.Data
                             Gender = emp.Gender.ToString(),
                             Email = acc.Email,
                             Salary = emp.Salary,
-                            Department_ID = dp.Department_ID 
+                            Department_ID = dp.DepartmentID 
                         };
             return query;
         }
@@ -66,7 +66,7 @@ namespace API.Repositories.Data
                 Department = query.Department.Name,
                 Email = query.Account.Email,
                 //Password = query.Account.Password,
-                Role = query.Account.AccountRoles.Where(ar => ar.Account_ID == query.Account.Account_ID).Select(ar => ar.Role.Name).ToList()
+                Role = query.Account.AccountRoles.Where(ar => ar.AccountID == query.Account.AccountID).Select(ar => ar.Role.Name).ToList()
 
 
             };
@@ -101,7 +101,7 @@ namespace API.Repositories.Data
             }
             else
             {
-                var incrementAcc2 = myContext.Accounts.ToList().Max(a=> a.Account_ID);
+                var incrementAcc2 = myContext.Accounts.ToList().Max(a=> a.AccountID);
                 formattedAccID = (Int32.Parse(incrementAcc2) + 1).ToString();
 
             }
@@ -125,14 +125,14 @@ namespace API.Repositories.Data
                     WorkHourPerDay = 8,
                     WorkDayPerMonth = 20,
                     Gender = registerVM.Gender,
-                    Department_ID = registerVM.Department,
-                    Overtime_ID = "O01"
+                    DepartmentID = registerVM.Department,
+                    OvertimeLimitID = "O01"
                 };
                 myContext.Employees.Add(emp);
                 myContext.SaveChanges();
                 var acc = new Account
                 {
-                    Account_ID = formattedAccID,
+                    AccountID = formattedAccID,
                     NIK = emp.NIK,
                     Email = registerVM.Email,
                     Password = Hashing.HashPassword(registerVM.Password)
@@ -141,8 +141,8 @@ namespace API.Repositories.Data
                 myContext.SaveChanges();
                 var accountRole = new AccountRole
                 {
-                    Account_ID = acc.Account_ID,
-                    Role_ID = "R02"
+                    AccountID = acc.AccountID,
+                    RoleID = "R02"
                 };
                 myContext.AccountRoles.Add(accountRole);
                 myContext.SaveChanges();

@@ -20,14 +20,14 @@ namespace API.Models
         public float Salary { get; set; }
         public int WorkHourPerDay { get; set; }
         public int WorkDayPerMonth { get; set; }
-        public string Department_ID { get; set; }
-        public string Manager_ID { get; set; }
-        public string Overtime_ID { get; set; }
+        public string ManagerID { get; set; }
+        public string DepartmentID { get; set; }
+        public string OvertimeLimitID { get; set; }
         [JsonIgnore]
-        [ForeignKey("Department_ID")]
+        [ForeignKey("DepartmentID")]
         public virtual Department Department { get; set; }
         [JsonIgnore]
-        [ForeignKey("Manager_ID")]
+        [ForeignKey("ManagerID")]
         public virtual Employee Manager { get; set; }
         [JsonIgnore]
         //[ForeignKey("NIK")]
@@ -35,17 +35,15 @@ namespace API.Models
         [JsonIgnore]
         public virtual Account Account { get; set; }
         [JsonIgnore]
-        public virtual ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
+        public virtual ICollection<OvertimeRequest> OvertimeSchedules { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("Overtime_ID")]
-        public virtual Overtime Overtime { get; set; }
+        [ForeignKey("OvertimeLimitID")]
+        public virtual OvertimeLimit OvertimeLimit { get; set; }
 
 
 
     }
-    
-
     public enum Gender {
         Male = 0,
         Felame = 1

@@ -2,35 +2,37 @@
     ViewData["Title"] = "Home Page";
     Layout = "_AdminLayout";
 }
-<div class="section-header d-flex justify-content-center shadow">
-    <h1>Dashboard</h1>
-</div>
-<div class="container">
-    <div class="row ustify-content-center">
 
-        <div class="col">
-            <div class="card shadow-lg position-absolute" style="width: 18rem;">
-                <img class="card-img-top" src="~/img/undraw_pull_request_gld8.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Overtime Request</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="/Home/OvertimeRequest" class="btn btn-primary">Go</a>
-                </div>
-            </div>
-        </div>
-        
-        @*@if (User.IsInRole("Employee"))
-        {*@
-        <div class="col">
-            <div class="card shadow-lg ml-md-auto" style="width: 18rem;">
-                <img class="card-img-top" src="~/img/undraw_Spreadsheet_re_cn18.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Overtime History</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        @* } *@
+<section class="section">
+    <div class="section-header d-flex justify-content-center shadow">
+        <h1>Dashboard</h1>
     </div>
-</div>
+    <div class="container">
+        <div class="row ustify-content-center">
+
+            <div class="col-md-6">
+                <div class="box shadow-lg ml-md-auto mb-3">
+                        <img class="card-img-top" style="height: 200px; width:auto" src="~/img/undraw_pull_request_gld8.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Request Form</h4>
+                        <button type="button" asp-area="" asp-controller="RequestForm" asp-action="Index" class="btn btn-primary" onclick="OvertimeRequest">GO</button>
+                    </div>
+                </div>
+            </div>
+
+            @*@if (User.IsInRole("Employee"))
+                {*@
+            <div class="col-md-6">
+                <div class="card shadow-lg ml-md-auto mb-3">
+                        <img class="card-img-top" style="height: 200px; width:auto" src="~/img/undraw_Spreadsheet_re_cn18.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h4>Request History</h4>
+                        <button href="#" class="btn btn-primary">GO</button>
+                    </div>
+                </div>
+            </div>
+            @* } *@
+        </div>
+    </div>
+</section>
+

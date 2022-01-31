@@ -50,6 +50,7 @@ namespace API.Controllers
                         var claims = new List<Claim>
                         {
                             new Claim("email", loginVM.Email),
+                            new Claim("nik", findEmp.NIK)
 
                         };
                         foreach (var roleData in getRoles)
@@ -68,9 +69,9 @@ namespace API.Controllers
                             );
                         var idToken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("TokenSecurity", idToken.ToString()));
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" , nik = findEmp.NIK, name = findEmp.FirstName +" "+ findEmp.LastName});
+                        return Ok(new JWTtokenVM { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" });
                     default:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Email or Password Wrong", nik = "", name=""});
+                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Email or Password Wrong"});
                 }
 
             }

@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
-    [Authorize]
-    public class EmployeeController : BaseController<Employee, EmployeeRepository, string>
+    //[Authorize]
+    public class RequestFormController : BaseController<Employee, EmployeeRepository, string>
     {
         private readonly EmployeeRepository repository;
-        public EmployeeController(EmployeeRepository repository) : base(repository)
+        public RequestFormController(EmployeeRepository repository) : base(repository)
         {
             this.repository = repository;
         }

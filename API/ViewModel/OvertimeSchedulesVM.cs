@@ -8,6 +8,7 @@ namespace API.ViewModel
 {
     public class OvertimeSchedulesVM
     {
+        public int OvertimeSchedule_ID { get; set; }
         public string NIK { get; set; }
         public string FullName { get; set; }
         public DateTime Date { get; set; }

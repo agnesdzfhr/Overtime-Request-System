@@ -37,7 +37,7 @@ namespace API.Repositories.Data
         public IEnumerable<object> GetRoles(string email)
         {
             var findEmail = myContext.Accounts.Where(a => a.Email == email).FirstOrDefault();
-            var AccountRole = myContext.AccountRoles.Where(ar => ar.Account_ID == findEmail.Account_ID).Select(ar => ar.Role.Name).ToList();
+            var AccountRole = myContext.AccountRoles.Where(ar => ar.AccountID == findEmail.AccountID).Select(ar => ar.Role.Name).ToList();
             return AccountRole;
 
         }

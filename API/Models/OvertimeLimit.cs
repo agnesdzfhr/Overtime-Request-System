@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_Overtime")]
-    public class Overtime
+    [Table("TB_M_OvertimeLimit")]
+    public class OvertimeLimit
     {
         [Key]
-        public string Overtime_ID { get; set; }
+        public string OvertimeLimitID { get; set; }
+        public string Type { get; set; }
         public TimeSpan MaxOvertime { get; set; }
         [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }

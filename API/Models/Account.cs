@@ -12,16 +12,16 @@ namespace API.Models
     public class Account
     {
         [Key]
-        public string Account_ID { get; set; }
+        public string AccountID { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int? OTP { get; set; }
-        public DateTime? ExpiredToken { get; set; }
-        public bool? IsUsed { get; set; }
+
         [JsonIgnore]
         public virtual Employee Employee { get; set; }
         public string NIK { get; set; }
         [JsonIgnore]
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<OTP> Otp { get; set; }
     }
 }

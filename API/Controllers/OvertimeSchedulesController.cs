@@ -15,7 +15,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OvertimeSchedulesController : BaseController<OvertimeSchedule, OvertimeScheduleRepository, int>
+    public class OvertimeSchedulesController : BaseController<OvertimeRequest, OvertimeScheduleRepository, int>
     {
         private readonly OvertimeScheduleRepository overtimeScheduleRepository;
         private readonly MyContext myContext;
@@ -44,6 +44,21 @@ namespace API.Controllers
         public ActionResult GetForManager(string NIK)
         {
             var response = overtimeScheduleRepository.GetForManager(NIK);
+            try
+            {
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("GetOvertimeScheduleByID/{id}")]
+        public ActionResult GetOvertimeScheduleByID(int ID)
+        {
+            var response = overtimeScheduleRepository.GetOvertimeScheduleByID(ID);
             try
             {
                 return Ok(response);
