@@ -17,13 +17,13 @@ function submitOvertime() {
     var nik = $('#nikUser').val();
     var obj = new Object();
     obj.NIK = nik;
-    obj.OvertimeSchedules = listRequest;
+    obj.OvertimeRequests = listRequest;
     console.log(obj);
     var objJson = JSON.stringify(obj);
     console.log(objJson);
 
     $.ajax({
-        url: "https://localhost:44388/API/OvertimeSchedules/OvertimeRequest",
+        url: "https://localhost:44388/API/OvertimeRequests/RequestForm",
         type: "POST",
         data: objJson,
         contentType: "application/json;charset=utf-8"
@@ -122,7 +122,7 @@ $(document).ready(function () {
                 objData.date = dateList;
                 objData.startTime = startTimeList;
                 objData.endTime = endTimeList;
-                objData.note = noteJobList;
+                objData.jobNote = noteJobList;
                 console.log(objData);
                 listRequest.push(objData);
                 //MASIH GAGAL

@@ -41,7 +41,7 @@ namespace API.Repositories.Data
                 var subjectEmail = "Overtime Request";
                 var bodyEmail = "Hai, Ini hanya email uji coba";
 
-                SendEmail(toEmail, subjectEmail, bodyEmail);
+                //SendEmail(toEmail, subjectEmail, bodyEmail);
 
                 return HttpStatusCode.OK;
             }
