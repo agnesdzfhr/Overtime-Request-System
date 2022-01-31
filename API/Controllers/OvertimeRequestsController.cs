@@ -17,17 +17,17 @@ namespace API.Controllers
     [ApiController]
     public class OvertimeRequestsController : BaseController<OvertimeRequest, OvertimeRequestRepository, int>
     {
-        private readonly OvertimeRequestRepository overtimeSRequestRepository;
+        private readonly OvertimeRequestRepository overtimeRequestRepository;
         private readonly MyContext myContext;
         public OvertimeRequestsController(OvertimeRequestRepository overtimeScheduleRepository, MyContext myContext) : base(overtimeScheduleRepository)
         {
-            this.overtimeSRequestRepository = overtimeScheduleRepository;
+            this.overtimeRequestRepository = overtimeScheduleRepository;
             this.myContext = myContext;
         }
         [HttpPost("RequestForm")]
         public ActionResult RequestForm(OvertimeRequestVM overtimeRequestVM)
         {
-            var request = overtimeSRequestRepository.RequestForm(overtimeRequestVM);
+            var request = overtimeRequestRepository.RequestForm(overtimeRequestVM);
             try
             {
 
@@ -43,7 +43,7 @@ namespace API.Controllers
         [HttpGet("GetForManager/{nik}")]
         public ActionResult GetForManager(string NIK)
         {
-            var response = overtimeSRequestRepository.GetForManager(NIK);
+            var response = overtimeRequestRepository.GetForManager(NIK);
             try
             {
                 return Ok(response);
@@ -58,7 +58,7 @@ namespace API.Controllers
         [HttpGet("GetOvertimeRequestByID/{id}")]
         public ActionResult GetOvertimeRequestByID(int ID)
         {
-            var response = overtimeSRequestRepository.GetOvertimeRequestByID(ID);
+            var response = overtimeRequestRepository.GetOvertimeRequestByID(ID);
             try
             {
                 return Ok(response);
@@ -67,6 +67,21 @@ namespace API.Controllers
             {
 
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("GetRegisteredRequest")]
+        public ActionResult GetRegisteredRequest()
+        {
+            var data = overtimeRequestRepository.GetRegisteredRequest();
+            if (data != null)
+            {
+
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Data is empty" });
             }
         }
     }

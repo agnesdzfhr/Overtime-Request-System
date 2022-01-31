@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class addDb : Migration
+    public partial class AddDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,7 +193,7 @@ namespace API.Migrations
                 {
                     FinanceValidationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalFee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalFee = table.Column<float>(type: "real", nullable: false),
                     OvertimeRequestID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

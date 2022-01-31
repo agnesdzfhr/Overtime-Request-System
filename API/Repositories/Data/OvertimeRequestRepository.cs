@@ -65,6 +65,7 @@ namespace API.Repositories.Data
                     NIK = item.NIK,
                     FullName = $"{item.Employee.FirstName} {item.Employee.LastName}",
                     Date = item.Date,
+                    DateStr = item.Date.ToString("yyyy-MM-dd"),
                     StartTime = item.StartTime,
                     EndTime = item.EndTime,
                     JobNote = item.JobNote
@@ -88,6 +89,7 @@ namespace API.Repositories.Data
                     NIK = findOvertimeSchedule.NIK,
                     FullName = $"{findOvertimeSchedule.Employee.FirstName} {findOvertimeSchedule.Employee.LastName}",
                     Date = findOvertimeSchedule.Date,
+                    DateStr = findOvertimeSchedule.Date.ToString("yyyy-MM-dd"),
                     StartTime = findOvertimeSchedule.StartTime,
                     EndTime = findOvertimeSchedule.EndTime,
                     JobNote = findOvertimeSchedule.JobNote
@@ -122,5 +124,67 @@ namespace API.Repositories.Data
                 throw;
             }
         }
+
+        public IEnumerable<Object> GetRegisteredRequest()
+        {
+            float totalFee = 0;
+            var listRequest = myContext.ManagerApprovals
+                .Where(ma => ma.ManagerApprovalStatus == ManagerApprovalStatus.Accepted)
+                .Include(ma => ma.OvertimeRequest)
+                .ThenInclude(or => or.Employee).ToList();
+
+            var firstHour = myContext.OvertimeBonuses.Where(ob => ob.OvertimeBonusID == "OB01").Select(ob => ob.CommisionPct).FirstOrDefault();
+            var nextHour = myContext.OvertimeBonuses.Where(ob => ob.OvertimeBonusID == "OB02").Select(ob => ob.CommisionPct).FirstOrDefault();
+
+            var result = new List<OvertimeFinanceApprovalVM>();
+
+            foreach (var item in listRequest)
+            {
+                var salaryEmployee = item.OvertimeRequest.Employee.Salary;
+                var workDayPerMonth = item.OvertimeRequest.Employee.WorkDayPerMonth;
+                var workHourPerDay = item.OvertimeRequest.Employee.WorkHourPerDay;
+                var salaryPerHour = salaryEmployee / (workDayPerMonth * workHourPerDay);
+
+                var endTime = item.OvertimeRequest.EndTime;
+                TimeSpan et = TimeSpan.Parse(endTime);
+                var startTime = item.OvertimeRequest.StartTime;
+                TimeSpan st = TimeSpan.Parse(startTime);
+
+                var jamOvertime = et - st;
+                var jamOvertimeString = jamOvertime.TotalSeconds.ToString();
+                var jamOvertimeInt = int.Parse(jamOvertimeString);
+                OvertimeFinanceApprovalVM query = null;
+                if (jamOvertimeInt == 3600)
+                {
+                    totalFee = salaryPerHour * firstHour;
+                    query = countBonus(totalFee, item);
+                }
+                else
+                {
+                    totalFee = (salaryPerHour * firstHour) + (nextHour * salaryPerHour * ((jamOvertimeInt - 3600)/3600));
+                    query = countBonus(totalFee, item);
+                }
+                result.Add(query);
+            }
+            return result;
+
+        }
+
+        private static OvertimeFinanceApprovalVM countBonus(float totalFee, ManagerApproval item)
+        {
+            var query = new OvertimeFinanceApprovalVM
+            {
+                NIK = item.OvertimeRequest.NIK,
+                FullName = item.OvertimeRequest.Employee.FirstName + " " + item.OvertimeRequest.Employee.LastName,
+                Date = item.OvertimeRequest.Date,
+                StartTime = item.OvertimeRequest.StartTime,
+                EndTime = item.OvertimeRequest.EndTime,
+                JobNote = item.OvertimeRequest.JobNote,
+                Salary = item.OvertimeRequest.Employee.Salary,
+                TotalFee = totalFee
+            };
+            return query;
+        }
+
     }
 }

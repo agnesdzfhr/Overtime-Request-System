@@ -13,7 +13,7 @@ namespace API.Models
     {
         [Key]
         public int FinanceValidationID { get; set; }
-        public string TotalFee { get; set; }
+        public float TotalFee { get; set; }
         public int OvertimeRequestID { get; set; }
         [JsonIgnore]
         [ForeignKey("OvertimeRequestID")]

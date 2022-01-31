@@ -133,8 +133,8 @@ namespace API.Migrations
                     b.Property<int>("OvertimeRequestID")
                         .HasColumnType("int");
 
-                    b.Property<string>("TotalFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("TotalFee")
+                        .HasColumnType("real");
 
                     b.HasKey("FinanceValidationID");
 

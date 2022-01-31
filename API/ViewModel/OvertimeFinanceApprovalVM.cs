@@ -1,20 +1,20 @@
-﻿using System;
+﻿using API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Models;
 
 namespace API.ViewModel
 {
-    public class OvertimeSchedulesVM
+    public class OvertimeFinanceApprovalVM
     {
-        public int OvertimeSchedule_ID { get; set; }
         public string NIK { get; set; }
         public string FullName { get; set; }
         public DateTime Date { get; set; }
-        public string DateStr { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string JobNote { get; set; }
+        public float Salary { get; set; }
+        public float TotalFee { get; set; }
     }
 }

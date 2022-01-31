@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220131024447_addDb")]
-    partial class addDb
+    [Migration("20220131110301_AddDb")]
+    partial class AddDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,8 +135,8 @@ namespace API.Migrations
                     b.Property<int>("OvertimeRequestID")
                         .HasColumnType("int");
 
-                    b.Property<string>("TotalFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("TotalFee")
+                        .HasColumnType("real");
 
                     b.HasKey("FinanceValidationID");
 

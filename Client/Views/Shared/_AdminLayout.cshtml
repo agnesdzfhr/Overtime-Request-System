@@ -104,7 +104,7 @@
                             <div class="d-sm-none d-lg-inline-block">Hi, <span id="userName"></span></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged in 5 min ago</div>
+                            <div class="dropdown-title">NIK: <span id="nikUser2"></span></div>
                             <a href="features-profile.html" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
                             </a>
@@ -145,13 +145,13 @@
                                 @if ((User.IsInRole("Manager"))|| (User.IsInRole("Admin")))
                                 {
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="ValidateRequest" class="nav-link"><span>Validate Request</span></a>
+                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="Index" class="nav-link"><span>Employee Request (M)</span></a>
                                     </li>
                                 }
                                 @if ((User.IsInRole("Finance")) || (User.IsInRole("Admin")))
                                 {
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="AcceptRequest" class="nav-link"><span>Accept Request</span></a>
+                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="Index" class="nav-link"><span>Employee Request (F)</span></a>
                                     </li>
                                 }
                                 <li>
@@ -209,6 +209,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+    <script src="~/js/Manager.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.js"></script>

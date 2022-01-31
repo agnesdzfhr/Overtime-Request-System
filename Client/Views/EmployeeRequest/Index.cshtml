@@ -9,26 +9,16 @@
     </div>
     <div class="section-body">
         <h4>Notification</h4>
-        <div class="card shadow" data-toggle="modal" data-target="#detailModalRequest" style="cursor: pointer;width: auto; height: auto;">
-            <div class="card-body">
-                <li class="media">
-                    <img alt="image" class="mr-3 rounded-circle" width="50" src="~/lib/assets/img/avatar/avatar-1.png">
-                    <div class="media-body">
-                        <div id="requesterName" class="mt-0 mb-1 font-weight-bold">Agnes Fahira</div>
-                        <div class="text-small font-600-bold">has been request for Overtime Schedule. Click this for more information.</div>
-                    </div>
-                </li>
-            </div>
-        </div>
-        <div class="card shadow" data-toggle="modal" data-target="#detailModalRequest" style="cursor: pointer;width: auto; height: auto;">
-            <div class="card-body">
-                <li class="media">
-                    <img alt="image" class="mr-3 rounded-circle" width="50" src="~/lib/assets/img/avatar/avatar-1.png">
-                    <div class="media-body">
-                        <div id="requesterName" class="mt-0 mb-1 font-weight-bold">Agnes Fahira</div>
-                        <div class="text-small font-600-bold">has been request for Overtime Schedule. Click this for more information.</div>
-                    </div>
-                </li>
+        <div id="cardNotification">
+            <div class="card shadow" data-toggle="modal" data-target="#detailModalRequest" style="cursor: pointer;width: auto; height: auto;">
+                <div class="card-body">
+                    <li class="media">
+                        <div class="media-body">
+                            <div id="requesterName" class="mt-0 mb-1 font-weight-bold">Agnes</div>
+                            <div class="text-small font-600-bold">has been request for Overtime Schedule. Click this for more information.</div>
+                        </div>
+                    </li>
+                </div>
             </div>
         </div>
     </div>
@@ -49,35 +39,35 @@
                     <div class="form-row">
                         <div class="col-md mb-3">
                             <label for="nik">NIK: </label>
-                            <input type="text" class="form-control" id="nikModal" readonly>
+                            <input type="text" class="form-control" id="nikModal" value="" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
                             <label for="fullname">Fullname: </label>
-                            <input type="text" class="form-control" id="fullNameModal" readonly>
+                            <input type="text" class="form-control" id="fullNameModal" value="" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
                             <label for="date">Date: </label>
-                            <input type="date" class="form-control" id="dateModal" readonly>
+                            <input type="date" class="form-control" id="dateModal" value="" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md mb-3">
                             <label for="startTime">Start Time: </label>
-                            <input type="time" class="form-control" id="startTimeModal" readonly>
+                            <input type="time" class="form-control" id="startTimeModal" value="" readonly>
                         </div>
                         <div class="col-md mb-3">
                             <label for="endTime">End Time: </label>
-                            <input type="time" class="form-control" id="endTimeModal" readonly>
+                            <input type="time" class="form-control" id="endTimeModal" value="" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
-                            <label for="note">Note Job: </label>
-                            <textarea type="text" class="form-control" id="note" value="Test" readonly></textarea>
+                            <label for="note">Job Note: </label>
+                            <textarea type="text" class="form-control" id="noteModal" value="Test" readonly></textarea>
                         </div>
                     </div>
                     <div class="d-inline-block mt-3">
@@ -91,6 +81,6 @@
 </div>
 
 @section Scripts{
-<script src="~/js/Manager.js" asp-append-version="true"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Manager.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 }

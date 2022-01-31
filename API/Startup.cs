@@ -37,6 +37,7 @@ namespace API
             services.AddScoped<AccountRoleRepository>();
             services.AddScoped<DepartmentRepository>();
             services.AddScoped<EmployeeRepository>();
+            services.AddScoped<ManagerApprovalRepository>();
             services.AddScoped<OvertimeBonusRepository>();
             services.AddScoped<OvertimeLimitRepository>();
             services.AddScoped<OvertimeRequestRepository>();
