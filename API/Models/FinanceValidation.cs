@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_FinanceValidation")]
+    [Table("tb_m_finance_validation")]
     public class FinanceValidation
     {
         [Key]

@@ -39,7 +39,7 @@ namespace API.Migrations
                         .IsUnique()
                         .HasFilter("[NIK] IS NOT NULL");
 
-                    b.ToTable("TB_M_Account");
+                    b.ToTable("tb_m_account");
                 });
 
             modelBuilder.Entity("API.Models.AccountRole", b =>
@@ -61,7 +61,7 @@ namespace API.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("TB_TR_AccountRole");
+                    b.ToTable("tb_tr_account_role");
                 });
 
             modelBuilder.Entity("API.Models.Department", b =>
@@ -74,7 +74,7 @@ namespace API.Migrations
 
                     b.HasKey("DepartmentID");
 
-                    b.ToTable("TB_M_Department");
+                    b.ToTable("tb_m_department");
                 });
 
             modelBuilder.Entity("API.Models.Employee", b =>
@@ -120,7 +120,7 @@ namespace API.Migrations
 
                     b.HasIndex("OvertimeLimitID");
 
-                    b.ToTable("TB_M_Employee");
+                    b.ToTable("tb_m_employee");
                 });
 
             modelBuilder.Entity("API.Models.FinanceValidation", b =>
@@ -141,7 +141,7 @@ namespace API.Migrations
                     b.HasIndex("OvertimeRequestID")
                         .IsUnique();
 
-                    b.ToTable("TB_M_FinanceValidation");
+                    b.ToTable("tb_m_finance_validation");
                 });
 
             modelBuilder.Entity("API.Models.ManagerApproval", b =>
@@ -162,7 +162,7 @@ namespace API.Migrations
                     b.HasIndex("OvertimeRequestID")
                         .IsUnique();
 
-                    b.ToTable("TB_M_ManagerApproval");
+                    b.ToTable("tb_m_manager_approval");
                 });
 
             modelBuilder.Entity("API.Models.OTP", b =>
@@ -188,7 +188,7 @@ namespace API.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.ToTable("TB_M_OTP");
+                    b.ToTable("tb_m_otp");
                 });
 
             modelBuilder.Entity("API.Models.OvertimeBonus", b =>
@@ -204,7 +204,7 @@ namespace API.Migrations
 
                     b.HasKey("OvertimeBonusID");
 
-                    b.ToTable("TB_M_OvertimeBonus");
+                    b.ToTable("tb_m_overtime_bonus");
                 });
 
             modelBuilder.Entity("API.Models.OvertimeLimit", b =>
@@ -220,7 +220,7 @@ namespace API.Migrations
 
                     b.HasKey("OvertimeLimitID");
 
-                    b.ToTable("TB_M_OvertimeLimit");
+                    b.ToTable("tb_m_overtime_limit");
                 });
 
             modelBuilder.Entity("API.Models.OvertimeRequest", b =>
@@ -249,7 +249,7 @@ namespace API.Migrations
 
                     b.HasIndex("NIK");
 
-                    b.ToTable("TB_M_OvertimeRequest");
+                    b.ToTable("tb_m_overtime_request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
@@ -262,7 +262,7 @@ namespace API.Migrations
 
                     b.HasKey("RoleID");
 
-                    b.ToTable("TB_M_Role");
+                    b.ToTable("tb_m_role");
                 });
 
             modelBuilder.Entity("API.Models.Account", b =>

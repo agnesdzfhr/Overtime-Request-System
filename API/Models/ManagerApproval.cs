@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_ManagerApproval")]
+    [Table("tb_m_manager_approval")]
     public class ManagerApproval
     {
         [Key]

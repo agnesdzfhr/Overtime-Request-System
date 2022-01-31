@@ -12,28 +12,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Data
 {
-    public class OvertimeScheduleRepository : GeneralRepository<MyContext, OvertimeRequest, int>
+    public class OvertimeRequestRepository : GeneralRepository<MyContext, OvertimeRequest, int>
     {
         public readonly MyContext myContext;
-        public OvertimeScheduleRepository(MyContext myContext) : base(myContext)
+        public OvertimeRequestRepository(MyContext myContext) : base(myContext)
         {
             this.myContext = myContext;
         }
-        public HttpStatusCode OvertimeRequest(OvertimeRequestVM overtimeRequestVM)
+        public HttpStatusCode RequestForm(OvertimeRequestVM overtimeRequestVM)
         {
             var findEmployee = myContext.Employees.Where(e => e.NIK == overtimeRequestVM.NIK).FirstOrDefault();
             var findManager = myContext.Employees.Where(e => e.NIK == findEmployee.ManagerID).FirstOrDefault();
 
-            List<OvertimeRequest> os = overtimeRequestVM.OvertimeSchedules;
-            foreach (var item in os)
-            {
-                item.NIK = overtimeRequestVM.NIK;
-            }
-            myContext.OvertimesSchedules.AddRange(os);
-            myContext.SaveChanges();
+
 
             if (findManager != null)
             {
+                List<OvertimeRequest> os = overtimeRequestVM.OvertimeRequests;
+                foreach (var item in os)
+                {
+                    item.NIK = overtimeRequestVM.NIK;
+                }
+                myContext.OvertimesRequests.AddRange(os);
+                myContext.SaveChanges();
                 var findManagerAcc = myContext.Accounts.Where(a => a.NIK == findManager.NIK).FirstOrDefault();
 
                 var toEmail = findManagerAcc.Email;
@@ -53,7 +54,7 @@ namespace API.Repositories.Data
         public IEnumerable<OvertimeSchedulesVM> GetForManager(string NIK)
         {
             //var findManager = myContext.Employees.Where( m => m.NIK == NIK).FirstOrDefault();
-            var findListEmployee = myContext.OvertimesSchedules.Include(os => os.Employee).Where(e => e.Employee.ManagerID == NIK).ToList();
+            var findListEmployee = myContext.OvertimesRequests.Include(os => os.Employee).Where(e => e.Employee.ManagerID == NIK).ToList();
 
             var listResult = new List<OvertimeSchedulesVM>();
             foreach (var item in findListEmployee)
@@ -66,7 +67,7 @@ namespace API.Repositories.Data
                     Date = item.Date,
                     StartTime = item.StartTime,
                     EndTime = item.EndTime,
-                    Note = item.JobNote
+                    JobNote = item.JobNote
 
                 };
 
@@ -78,9 +79,9 @@ namespace API.Repositories.Data
             return listResultDescending;
         }
 
-        public OvertimeSchedulesVM GetOvertimeScheduleByID(int ID)
+        public OvertimeSchedulesVM GetOvertimeRequestByID(int ID)
         {
-            var findOvertimeSchedule = myContext.OvertimesSchedules.Include(os => os.Employee).Where(e => e.OvertimeRequestID == ID).FirstOrDefault();
+            var findOvertimeSchedule = myContext.OvertimesRequests.Include(os => os.Employee).Where(e => e.OvertimeRequestID == ID).FirstOrDefault();
                 var result = new OvertimeSchedulesVM
                 {
                     OvertimeSchedule_ID = findOvertimeSchedule.OvertimeRequestID,
@@ -89,7 +90,7 @@ namespace API.Repositories.Data
                     Date = findOvertimeSchedule.Date,
                     StartTime = findOvertimeSchedule.StartTime,
                     EndTime = findOvertimeSchedule.EndTime,
-                    Note = findOvertimeSchedule.JobNote
+                    JobNote = findOvertimeSchedule.JobNote
 
                 };
             return result;

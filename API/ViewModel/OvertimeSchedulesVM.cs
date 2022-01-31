@@ -14,6 +14,6 @@ namespace API.ViewModel
         public DateTime Date { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public string Note { get; set; }
+        public string JobNote { get; set; }
     }
 }

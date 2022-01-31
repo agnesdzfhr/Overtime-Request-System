@@ -8,7 +8,7 @@ namespace API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TB_M_Department",
+                name: "tb_m_department",
                 columns: table => new
                 {
                     DepartmentID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -16,11 +16,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_Department", x => x.DepartmentID);
+                    table.PrimaryKey("PK_tb_m_department", x => x.DepartmentID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_OvertimeBonus",
+                name: "tb_m_overtime_bonus",
                 columns: table => new
                 {
                     OvertimeBonusID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -29,11 +29,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_OvertimeBonus", x => x.OvertimeBonusID);
+                    table.PrimaryKey("PK_tb_m_overtime_bonus", x => x.OvertimeBonusID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_OvertimeLimit",
+                name: "tb_m_overtime_limit",
                 columns: table => new
                 {
                     OvertimeLimitID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -42,11 +42,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_OvertimeLimit", x => x.OvertimeLimitID);
+                    table.PrimaryKey("PK_tb_m_overtime_limit", x => x.OvertimeLimitID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_Role",
+                name: "tb_m_role",
                 columns: table => new
                 {
                     RoleID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -54,11 +54,11 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_Role", x => x.RoleID);
+                    table.PrimaryKey("PK_tb_m_role", x => x.RoleID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_Employee",
+                name: "tb_m_employee",
                 columns: table => new
                 {
                     NIK = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -75,29 +75,29 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_Employee", x => x.NIK);
+                    table.PrimaryKey("PK_tb_m_employee", x => x.NIK);
                     table.ForeignKey(
-                        name: "FK_TB_M_Employee_TB_M_Department_DepartmentID",
+                        name: "FK_tb_m_employee_tb_m_department_DepartmentID",
                         column: x => x.DepartmentID,
-                        principalTable: "TB_M_Department",
+                        principalTable: "tb_m_department",
                         principalColumn: "DepartmentID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TB_M_Employee_TB_M_Employee_ManagerID",
+                        name: "FK_tb_m_employee_tb_m_employee_ManagerID",
                         column: x => x.ManagerID,
-                        principalTable: "TB_M_Employee",
+                        principalTable: "tb_m_employee",
                         principalColumn: "NIK",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TB_M_Employee_TB_M_OvertimeLimit_OvertimeLimitID",
+                        name: "FK_tb_m_employee_tb_m_overtime_limit_OvertimeLimitID",
                         column: x => x.OvertimeLimitID,
-                        principalTable: "TB_M_OvertimeLimit",
+                        principalTable: "tb_m_overtime_limit",
                         principalColumn: "OvertimeLimitID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_Account",
+                name: "tb_m_account",
                 columns: table => new
                 {
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -107,17 +107,17 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_Account", x => x.AccountID);
+                    table.PrimaryKey("PK_tb_m_account", x => x.AccountID);
                     table.ForeignKey(
-                        name: "FK_TB_M_Account_TB_M_Employee_NIK",
+                        name: "FK_tb_m_account_tb_m_employee_NIK",
                         column: x => x.NIK,
-                        principalTable: "TB_M_Employee",
+                        principalTable: "tb_m_employee",
                         principalColumn: "NIK",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_OvertimeRequest",
+                name: "tb_m_overtime_request",
                 columns: table => new
                 {
                     OvertimeRequestID = table.Column<int>(type: "int", nullable: false)
@@ -130,17 +130,17 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_OvertimeRequest", x => x.OvertimeRequestID);
+                    table.PrimaryKey("PK_tb_m_overtime_request", x => x.OvertimeRequestID);
                     table.ForeignKey(
-                        name: "FK_TB_M_OvertimeRequest_TB_M_Employee_NIK",
+                        name: "FK_tb_m_overtime_request_tb_m_employee_NIK",
                         column: x => x.NIK,
-                        principalTable: "TB_M_Employee",
+                        principalTable: "tb_m_employee",
                         principalColumn: "NIK",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_OTP",
+                name: "tb_m_otp",
                 columns: table => new
                 {
                     OtpID = table.Column<int>(type: "int", nullable: false)
@@ -152,17 +152,17 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_OTP", x => x.OtpID);
+                    table.PrimaryKey("PK_tb_m_otp", x => x.OtpID);
                     table.ForeignKey(
-                        name: "FK_TB_M_OTP_TB_M_Account_AccountID",
+                        name: "FK_tb_m_otp_tb_m_account_AccountID",
                         column: x => x.AccountID,
-                        principalTable: "TB_M_Account",
+                        principalTable: "tb_m_account",
                         principalColumn: "AccountID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_TR_AccountRole",
+                name: "tb_tr_account_role",
                 columns: table => new
                 {
                     AccountRoleID = table.Column<int>(type: "int", nullable: false)
@@ -172,23 +172,23 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_TR_AccountRole", x => x.AccountRoleID);
+                    table.PrimaryKey("PK_tb_tr_account_role", x => x.AccountRoleID);
                     table.ForeignKey(
-                        name: "FK_TB_TR_AccountRole_TB_M_Account_AccountID",
+                        name: "FK_tb_tr_account_role_tb_m_account_AccountID",
                         column: x => x.AccountID,
-                        principalTable: "TB_M_Account",
+                        principalTable: "tb_m_account",
                         principalColumn: "AccountID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TB_TR_AccountRole_TB_M_Role_RoleID",
+                        name: "FK_tb_tr_account_role_tb_m_role_RoleID",
                         column: x => x.RoleID,
-                        principalTable: "TB_M_Role",
+                        principalTable: "tb_m_role",
                         principalColumn: "RoleID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_FinanceValidation",
+                name: "tb_m_finance_validation",
                 columns: table => new
                 {
                     FinanceValidationID = table.Column<int>(type: "int", nullable: false)
@@ -198,17 +198,17 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_FinanceValidation", x => x.FinanceValidationID);
+                    table.PrimaryKey("PK_tb_m_finance_validation", x => x.FinanceValidationID);
                     table.ForeignKey(
-                        name: "FK_TB_M_FinanceValidation_TB_M_OvertimeRequest_OvertimeRequestID",
+                        name: "FK_tb_m_finance_validation_tb_m_overtime_request_OvertimeRequestID",
                         column: x => x.OvertimeRequestID,
-                        principalTable: "TB_M_OvertimeRequest",
+                        principalTable: "tb_m_overtime_request",
                         principalColumn: "OvertimeRequestID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TB_M_ManagerApproval",
+                name: "tb_m_manager_approval",
                 columns: table => new
                 {
                     ManagerApprovalID = table.Column<int>(type: "int", nullable: false)
@@ -218,104 +218,104 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_M_ManagerApproval", x => x.ManagerApprovalID);
+                    table.PrimaryKey("PK_tb_m_manager_approval", x => x.ManagerApprovalID);
                     table.ForeignKey(
-                        name: "FK_TB_M_ManagerApproval_TB_M_OvertimeRequest_OvertimeRequestID",
+                        name: "FK_tb_m_manager_approval_tb_m_overtime_request_OvertimeRequestID",
                         column: x => x.OvertimeRequestID,
-                        principalTable: "TB_M_OvertimeRequest",
+                        principalTable: "tb_m_overtime_request",
                         principalColumn: "OvertimeRequestID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_Account_NIK",
-                table: "TB_M_Account",
+                name: "IX_tb_m_account_NIK",
+                table: "tb_m_account",
                 column: "NIK",
                 unique: true,
                 filter: "[NIK] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_Employee_DepartmentID",
-                table: "TB_M_Employee",
+                name: "IX_tb_m_employee_DepartmentID",
+                table: "tb_m_employee",
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_Employee_ManagerID",
-                table: "TB_M_Employee",
+                name: "IX_tb_m_employee_ManagerID",
+                table: "tb_m_employee",
                 column: "ManagerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_Employee_OvertimeLimitID",
-                table: "TB_M_Employee",
+                name: "IX_tb_m_employee_OvertimeLimitID",
+                table: "tb_m_employee",
                 column: "OvertimeLimitID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_FinanceValidation_OvertimeRequestID",
-                table: "TB_M_FinanceValidation",
+                name: "IX_tb_m_finance_validation_OvertimeRequestID",
+                table: "tb_m_finance_validation",
                 column: "OvertimeRequestID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_ManagerApproval_OvertimeRequestID",
-                table: "TB_M_ManagerApproval",
+                name: "IX_tb_m_manager_approval_OvertimeRequestID",
+                table: "tb_m_manager_approval",
                 column: "OvertimeRequestID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_OTP_AccountID",
-                table: "TB_M_OTP",
+                name: "IX_tb_m_otp_AccountID",
+                table: "tb_m_otp",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_M_OvertimeRequest_NIK",
-                table: "TB_M_OvertimeRequest",
+                name: "IX_tb_m_overtime_request_NIK",
+                table: "tb_m_overtime_request",
                 column: "NIK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_TR_AccountRole_AccountID",
-                table: "TB_TR_AccountRole",
+                name: "IX_tb_tr_account_role_AccountID",
+                table: "tb_tr_account_role",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_TR_AccountRole_RoleID",
-                table: "TB_TR_AccountRole",
+                name: "IX_tb_tr_account_role_RoleID",
+                table: "tb_tr_account_role",
                 column: "RoleID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TB_M_FinanceValidation");
+                name: "tb_m_finance_validation");
 
             migrationBuilder.DropTable(
-                name: "TB_M_ManagerApproval");
+                name: "tb_m_manager_approval");
 
             migrationBuilder.DropTable(
-                name: "TB_M_OTP");
+                name: "tb_m_otp");
 
             migrationBuilder.DropTable(
-                name: "TB_M_OvertimeBonus");
+                name: "tb_m_overtime_bonus");
 
             migrationBuilder.DropTable(
-                name: "TB_TR_AccountRole");
+                name: "tb_tr_account_role");
 
             migrationBuilder.DropTable(
-                name: "TB_M_OvertimeRequest");
+                name: "tb_m_overtime_request");
 
             migrationBuilder.DropTable(
-                name: "TB_M_Account");
+                name: "tb_m_account");
 
             migrationBuilder.DropTable(
-                name: "TB_M_Role");
+                name: "tb_m_role");
 
             migrationBuilder.DropTable(
-                name: "TB_M_Employee");
+                name: "tb_m_employee");
 
             migrationBuilder.DropTable(
-                name: "TB_M_Department");
+                name: "tb_m_department");
 
             migrationBuilder.DropTable(
-                name: "TB_M_OvertimeLimit");
+                name: "tb_m_overtime_limit");
         }
     }
 }

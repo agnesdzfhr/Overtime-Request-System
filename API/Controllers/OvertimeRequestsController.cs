@@ -15,19 +15,19 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OvertimeSchedulesController : BaseController<OvertimeRequest, OvertimeScheduleRepository, int>
+    public class OvertimeRequestsController : BaseController<OvertimeRequest, OvertimeRequestRepository, int>
     {
-        private readonly OvertimeScheduleRepository overtimeScheduleRepository;
+        private readonly OvertimeRequestRepository overtimeSRequestRepository;
         private readonly MyContext myContext;
-        public OvertimeSchedulesController(OvertimeScheduleRepository overtimeScheduleRepository, MyContext myContext) : base(overtimeScheduleRepository)
+        public OvertimeRequestsController(OvertimeRequestRepository overtimeScheduleRepository, MyContext myContext) : base(overtimeScheduleRepository)
         {
-            this.overtimeScheduleRepository = overtimeScheduleRepository;
+            this.overtimeSRequestRepository = overtimeScheduleRepository;
             this.myContext = myContext;
         }
-        [HttpPost("OvertimeRequest")]
-        public ActionResult OvertimeRequest(OvertimeRequestVM overtimeRequestVM)
+        [HttpPost("RequestForm")]
+        public ActionResult RequestForm(OvertimeRequestVM overtimeRequestVM)
         {
-            var request = overtimeScheduleRepository.OvertimeRequest(overtimeRequestVM);
+            var request = overtimeSRequestRepository.RequestForm(overtimeRequestVM);
             try
             {
 
@@ -43,7 +43,7 @@ namespace API.Controllers
         [HttpGet("GetForManager/{nik}")]
         public ActionResult GetForManager(string NIK)
         {
-            var response = overtimeScheduleRepository.GetForManager(NIK);
+            var response = overtimeSRequestRepository.GetForManager(NIK);
             try
             {
                 return Ok(response);
@@ -55,10 +55,10 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("GetOvertimeScheduleByID/{id}")]
-        public ActionResult GetOvertimeScheduleByID(int ID)
+        [HttpGet("GetOvertimeRequestByID/{id}")]
+        public ActionResult GetOvertimeRequestByID(int ID)
         {
-            var response = overtimeScheduleRepository.GetOvertimeScheduleByID(ID);
+            var response = overtimeSRequestRepository.GetOvertimeRequestByID(ID);
             try
             {
                 return Ok(response);

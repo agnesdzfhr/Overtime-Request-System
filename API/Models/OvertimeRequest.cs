@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_OvertimeRequest")]
+    [Table("tb_m_overtime_request")]
     public class OvertimeRequest
     {
         [Key]

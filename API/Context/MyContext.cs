@@ -16,11 +16,14 @@ namespace API.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<OTP> OTPs { get; set; }
         public DbSet<AccountRole> AccountRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<OvertimeLimit> Overtimes { get; set; }
         public DbSet<OvertimeBonus> OvertimeBonuses { get; set; }
-        public DbSet<OvertimeRequest> OvertimesSchedules { get; set; }
+        public DbSet<OvertimeRequest> OvertimesRequests { get; set; }
+        public DbSet<ManagerApproval> ManagerApprovals { get; set; }
+        public DbSet<FinanceValidation> FinanceValidations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_OTP")]
+    [Table("tb_m_otp")]
     public class OTP
     {
         [Key]

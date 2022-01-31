@@ -39,7 +39,7 @@ namespace API
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<OvertimeBonusRepository>();
             services.AddScoped<OvertimeLimitRepository>();
-            services.AddScoped<OvertimeScheduleRepository>();
+            services.AddScoped<OvertimeRequestRepository>();
             services.AddScoped<RoleRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
