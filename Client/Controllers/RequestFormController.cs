@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class RequestFormController : BaseController<Employee, EmployeeRepository, string>
     {
         private readonly EmployeeRepository repository;

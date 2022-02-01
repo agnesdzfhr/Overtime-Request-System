@@ -38,10 +38,10 @@ namespace API.Repositories.Data
                 var findManagerAcc = myContext.Accounts.Where(a => a.NIK == findManager.NIK).FirstOrDefault();
 
                 var toEmail = findManagerAcc.Email;
-                var subjectEmail = "Overtime Request";
-                var bodyEmail = "Hai, Ini hanya email uji coba";
+                var subjectEmail = "Employee Overtime Request";
+                var bodyEmail = "Hi, you has overtime request from your employee, please check this link for more information https://localhost:44376/EmployeeRequest";
 
-                //SendEmail(toEmail, subjectEmail, bodyEmail);
+                SendEmail(toEmail, subjectEmail, bodyEmail);
 
                 return HttpStatusCode.OK;
             }
@@ -59,6 +59,7 @@ namespace API.Repositories.Data
             var listResult = new List<OvertimeSchedulesVM>();
             foreach (var item in findListEmployee)
             {
+                var findApproval = myContext.ManagerApprovals.Where(ma => ma.OvertimeRequestID == item.OvertimeRequestID).Select(ma => ma.ManagerApprovalStatus).FirstOrDefault();
                 var result = new OvertimeSchedulesVM
                 {
                     OvertimeSchedule_ID = item.OvertimeRequestID,
@@ -68,7 +69,8 @@ namespace API.Repositories.Data
                     DateStr = item.Date.ToString("yyyy-MM-dd"),
                     StartTime = item.StartTime,
                     EndTime = item.EndTime,
-                    JobNote = item.JobNote
+                    JobNote = item.JobNote,
+                    ApprovalStatus = OvertimeSchedulesVM.GetApprovalStatus((int)findApproval)
 
                 };
 

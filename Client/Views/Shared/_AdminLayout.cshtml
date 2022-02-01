@@ -10,9 +10,14 @@
     <link rel="stylesheet" href="~/lib/assets/modules/fontawesome/css/all.min.css">
 
     <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/datatables.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="~/lib/assets/css/style.css">
     <link rel="stylesheet" href="~/lib/assets/css/components.css">
+    <link rel="stylesheet" href="~/css/site.css">
     <!-- Start GA -->
     <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
@@ -142,7 +147,7 @@
                                 <li>
                                     <a asp-area="" asp-controller="RequestForm" asp-action="Index" class="nav-link"><span>Request Form</span></a>
                                 </li>
-                                @if ((User.IsInRole("Manager"))|| (User.IsInRole("Admin")))
+                                @if ((User.IsInRole("Manager")) || (User.IsInRole("Admin")))
                                 {
                                     <li>
                                         <a asp-area="" asp-controller="EmployeeRequest" asp-action="Index" class="nav-link"><span>Employee Request (M)</span></a>
@@ -151,7 +156,7 @@
                                 @if ((User.IsInRole("Finance")) || (User.IsInRole("Admin")))
                                 {
                                     <li>
-                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="Index" class="nav-link"><span>Employee Request (F)</span></a>
+                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="ValidateBonus" class="nav-link"><span>Employee Request (F)</span></a>
                                     </li>
                                 }
                                 <li>
@@ -168,7 +173,7 @@
                         }
 
 
-                        </ul>
+                    </ul>
                 </aside>
             </div>
 
@@ -197,15 +202,18 @@
     <script src="~/lib/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="~/lib/assets/modules/datatables/datatables.min.js"></script>
+    <script src="~/lib/assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
+    <script src="~/lib/assets/modules/jquery-ui/jquery-ui.min.js"></script>
+
     <!-- Page Specific JS File -->
+    <script src="~/lib/assets/js/page/modules-datatables.js"></script>
+
     <!-- Template JS File -->
     <script src="~/lib/assets/js/scripts.js"></script>
     <script src="~/lib/assets/js/custom.js"></script>
 
-
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>

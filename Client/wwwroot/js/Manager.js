@@ -63,7 +63,7 @@ $.ajax({
                 <div class="card-body">
                     <li class="media">
                         <div class="media-body">
-                            <div id="requesterName" class="mt-0 mb-1 font-weight-bold">${val.fullName}</div>
+                            <div id="requesterName" class="mt-0 mb-1 font-weight-bold">${val.fullName} <span id="needApproval" class="badge ${val.approvalStatus}">${val.approvalStatus}</span></div>
                             <div class="text-small font-600-bold">has been request for Overtime Schedule. Click this for more information.</div>
                         </div>
                     </li>
@@ -73,6 +73,7 @@ $.ajax({
         console.log(text);
         $("#cardNotification").html(text);
 
+
     }).fail((error) => {
         console.log(error);
     })
@@ -81,14 +82,32 @@ $.ajax({
     console.log(error)
 })
 
-console.log("NIK");
-console.log(nikUser);
+/*function getData() {
+    $.ajax({
+        url: "https://localhost:44376/employees/getdata",
+    }).done((result) => {
+        console.log(result);
 
+        return result.nik
 
+    }).fail((error) => {
+        console.log(error)
+    })
+}
 
+function getForManager() {
+    nik = getData();
+    $.ajax({
+        url: "https://localhost:44388/API/OvertimeRequests/GetForManager/" + nik,
+    }).done((result) => {
+        console.log(result);
 
+        return result.nik
 
-
+    }).fail((error) => {
+        console.log(error)
+    })
+}*/
 
 
 
@@ -99,6 +118,7 @@ function getDetail(id) {
         console.log(result);
 
         $("#nikModal").val(result.nik);
+        $("#requestID").val(result.overtimeSchedule_ID);
         $("#fullNameModal").val(result.fullName);
         $("#dateModal").val(result.dateStr);
         $("#startTimeModal").val(result.startTime);
@@ -107,4 +127,101 @@ function getDetail(id) {
     }).fail((error) => {
         console.log(error);
     });
+}
+
+
+function acceptRequest() {
+    console.log("Berhasil");
+    Swal.fire({
+        title:'Are you sure to accept this request?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##ff0000',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, accept this request!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            id = parseInt($("#requestID").val());
+
+            obj = new Object();
+            obj.managerApprovalStatus = 2;
+            obj.overtimeRequestID = id;
+            var objJson = JSON.stringify(obj);
+            console.log(objJson);
+
+            $.ajax({
+                url: "https://localhost:44388/api/ManagerApprovals/Approval",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: objJson
+            }).done((result) => {
+                console.log(result);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "This request is Accepted",
+                    type: 'success'
+                });
+                location.reload(true);
+
+            }).fail((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: error.responseText,
+                    type: 'failed'
+                });
+            })
+        }
+    })
+}
+
+function rejectRequest() {
+    console.log("Berhasil");
+    Swal.fire({
+        title: 'Are you sure to reject this request?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##ff0000',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, reject this request!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            id = parseInt($("#requestID").val());
+
+            obj = new Object();
+            obj.managerApprovalStatus = 1;
+            obj.overtimeRequestID = id;
+            var objJson = JSON.stringify(obj);
+            console.log(objJson);
+
+            $.ajax({
+                url: "https://localhost:44388/api/ManagerApprovals/Approval",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                data: objJson
+            }).done((result) => {
+                console.log(result);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "This request is Rejected",
+                    type: 'success'
+                });
+                location.reload(true);
+
+            }).fail((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: error.responseText,
+                    type: 'failed'
+                });
+            })
+        }
+    })
 }

@@ -30,7 +30,7 @@ namespace API.Controllers
                 case HttpStatusCode.OK:
                     return Ok(register);
                 default:
-                    return BadRequest(new { status = register, message = "Overtime Request ID Note Found" });
+                    return BadRequest("You already accept/reject this request. If you want to change it, please contact the Admin");
             }
         }
     }

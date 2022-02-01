@@ -16,6 +16,7 @@ namespace API.Models
         //public DateTime StartDate { get; set; }
         //public DateTime EndDate { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ManagerApprovalStatus ManagerApprovalStatus { get; set; }
         public int OvertimeRequestID { get; set; }
 
@@ -27,7 +28,8 @@ namespace API.Models
     }
     public enum ManagerApprovalStatus
     {
-        Rejected = 0,
-        Accepted = 1
+        NeedApproval = 0,
+        Rejected = 1,
+        Accepted = 2
     }
 }

@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "401";
+    Layout = "_Error";
+}
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content" class="mt-5">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- 404 Error Text -->
+                <div class="text-center">
+                    <div class="error mx-auto" data-text="401">401</div>
+                    <p class="lead text-gray-800 mb-5">Unauthorized</p>
+                    <p class="text-gray-500 mb-0">It looks like you are not logged in yet...</p>
+                    <p class="text-gray-500 mb-0">Automatic redirect to login page in: <span id="time">5</span></p>
+                    <a href="../login">&larr; Back to Login Page</a>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="fixed-bottom sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+
+<script>
+    var seconds = 5;
+    window.onload = function () {
+        var timer = setInterval(function () {
+            if (seconds <= 0) {
+                document.getElementById("time").innerHTML = 0;
+                clearInteval(timer);
+            } else {
+                document.getElementById("time").innerHTML = seconds - 1;
+            }
+            seconds -= 1;
+        }, 1000);
+        setTimeout(function () {
+            window.location.href = '/login';
+        }, seconds * 1000);
+    }
+</script>
+

@@ -16,5 +16,21 @@ namespace API.ViewModel
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string JobNote { get; set; }
+        public string ApprovalStatus { get; set; }
+
+        public static string GetApprovalStatus(int approvalStatus)
+        {
+            switch (approvalStatus)
+            {
+                case (int)Models.ManagerApprovalStatus.NeedApproval:
+                    return "Need Approval";
+                case (int)Models.ManagerApprovalStatus.Rejected:
+                    return "Rejected";
+                case (int)Models.ManagerApprovalStatus.Accepted:
+                    return "Accepted";
+                default:
+                    return "Invalid Data For Gender";
+            }
+        }
     }
 }
