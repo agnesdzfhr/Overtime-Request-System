@@ -46,15 +46,27 @@ $(document).ready(function () {
                 }
             },
             {
-                'data': 'action',
+                'data': 'overtimeRequestID'
+            },
+            {
+                'data': 'overtimeRequestID',
                 'bSortable': false,
                 'render': function (data, type, row, meta) {
-                    return '<div id="addFee"><button class="btn btn-success onclick="submitFeeToDatabaes()"><i class="fa fa-check"></i></button></div>';
+                    return '<div id="addFee"><div id="f1"><button class="btn btn-primary"><i class="fa fa-plus"></i></button></div></div>';
                 }
             }
         ]
     });
     console.log(table);
+});
+
+$('#tableValidateBonus').on('click', '#addFee', function () {
+    let rowData = $('#tableValidateBonus').DataTable().row($(this).closest('tr')).data();
+    var id = `<div id="f${rowData.overtimeRequestID}"><button class="btn btn-success"><i class="fa fa-plus"></i></button></div>`;
+    $('#addFee').html(id);
+    console.log($('#addFee').html());
+    console.log(rowData);
+    submitFeeToDatabase(rowData.overtimeRequestID, rowData.totalFee);
 });
 
 function formatRupiah(angka, prefix) {
@@ -71,6 +83,47 @@ function formatRupiah(angka, prefix) {
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
 
-function submitFeeToDatabaes() {
-    
+function submitFeeToDatabase(id, totalFee) {
+    console.log("error1");
+    Swal.fire({
+        title: 'Yakin ingin menginput data ini?',
+        text: "Data akan diinput ke dalam database",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yakin',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log("error2");
+            obj = new Object();
+            obj.overtimeRequestID = id;
+            obj.totalFee = totalFee;
+            var objJson = JSON.stringify(obj);
+            console.log(objJson);
+            $.ajax({
+                url: "https://localhost:44388/API/OvertimeRequests/InsertCountBonus",
+                data: objJson,
+                contentType: "application/json;charset=utf-8",
+                type: "POST",
+                crossDomain: true,
+            }).done((result) => {
+                var getId = `<div id="f${id}"><button class="btn btn-success"><i class="fa fa-plus"></i></button></div>`;
+                var ubah = `<span class="badge badge-success">Completed</span>`;
+                $('#f${id}').html(ubah);
+                Swal.fire(
+                    'Berhasil',
+                    result.messageResult,
+                    'success'
+                )
+                table.ajax.reload();
+            }).fail((error) => {
+                Swal.fire(
+                    'Gagal',
+                    'error'
+                )
+            })
+        }
+    })
 }

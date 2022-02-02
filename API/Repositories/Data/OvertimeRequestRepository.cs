@@ -183,9 +183,30 @@ namespace API.Repositories.Data
                 EndTime = item.OvertimeRequest.EndTime,
                 JobNote = item.OvertimeRequest.JobNote,
                 Salary = item.OvertimeRequest.Employee.Salary,
-                TotalFee = totalFee
+                TotalFee = totalFee,
+                OvertimeRequestID = item.OvertimeRequest.OvertimeRequestID
             };
             return query;
+        }
+        public HttpStatusCode InsertCountBonus(FinanceValidation financeValidation)
+        {
+            var checkOvertimeReqID = myContext.OvertimesRequests.Where(or => or.OvertimeRequestID == financeValidation.OvertimeRequestID).FirstOrDefault();
+
+            if (checkOvertimeReqID == null)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+            else
+            {
+                var financeBonus = new FinanceValidation
+                {
+                    OvertimeRequestID = checkOvertimeReqID.OvertimeRequestID,
+                    TotalFee = financeValidation.TotalFee,
+                };
+                myContext.FinanceValidations.Add(financeBonus);
+                myContext.SaveChanges();
+                return HttpStatusCode.OK;
+            }
         }
 
     }

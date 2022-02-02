@@ -84,5 +84,20 @@ namespace API.Controllers
                 return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Data is empty" });
             }
         }
+        [HttpPost("InsertCountBonus")]
+        public ActionResult InsertCountBonus(FinanceValidation financeValidation)
+        {
+            var request = overtimeRequestRepository.InsertCountBonus(financeValidation);
+            try
+            {
+
+                return Ok(request);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

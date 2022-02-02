@@ -16,5 +16,6 @@ namespace API.ViewModel
         public string JobNote { get; set; }
         public float Salary { get; set; }
         public float TotalFee { get; set; }
+        public int OvertimeRequestID { get; set; }
     }
 }
