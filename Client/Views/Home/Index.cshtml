@@ -7,31 +7,28 @@
     <div class="section-header d-flex justify-content-center shadow">
         <h1>Dashboard</h1>
     </div>
-    <div class="container">
-        <div class="row ustify-content-center">
-
-            <div class="col-md-6">
-                <div class="box shadow-lg ml-md-auto mb-3">
-                        <img class="card-img-top" style="height: 200px; width:auto" src="~/img/undraw_pull_request_gld8.png" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Request Form</h4>
-                        <button type="button" asp-area="" asp-controller="RequestForm" asp-action="Index" class="btn btn-primary" onclick="OvertimeRequest">GO</button>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                    <h2>Overtime Request</h2>
+                    <p class="lead">You can request overtime by click the button below</p>
+                    <div class="mt-4">
+                        <a href="/RequestForm" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>Go</a>
                     </div>
                 </div>
             </div>
-
-            @*@if (User.IsInRole("Employee"))
-                {*@
-            <div class="col-md-6">
-                <div class="card shadow-lg ml-md-auto mb-3">
-                        <img class="card-img-top" style="height: 200px; width:auto" src="~/img/undraw_Spreadsheet_re_cn18.png" alt="Card image cap">
-                    <div class="card-body">
-                        <h4>Request History</h4>
-                        <button href="#" class="btn btn-primary">GO</button>
+        </div>
+        <div class="col-12 mb-4">
+            <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                    <h2>Request History</h2>
+                    <p class="lead">You can see your request history by click the button below</p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>Go</a>
                     </div>
                 </div>
             </div>
-            @* } *@
         </div>
     </div>
 </section>

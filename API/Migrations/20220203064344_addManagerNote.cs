@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class AddDb : Migration
+    public partial class addManagerNote : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,6 +103,9 @@ namespace API.Migrations
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TokenOTP = table.Column<int>(type: "int", nullable: false),
+                    ExpiredToken = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
                     NIK = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -136,28 +139,6 @@ namespace API.Migrations
                         column: x => x.NIK,
                         principalTable: "tb_m_employee",
                         principalColumn: "NIK",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tb_m_otp",
-                columns: table => new
-                {
-                    OtpID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TokenOTP = table.Column<int>(type: "int", nullable: false),
-                    ExpiredToken = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsUsed = table.Column<bool>(type: "bit", nullable: true),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_otp", x => x.OtpID);
-                    table.ForeignKey(
-                        name: "FK_tb_m_otp_tb_m_account_AccountID",
-                        column: x => x.AccountID,
-                        principalTable: "tb_m_account",
-                        principalColumn: "AccountID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -214,7 +195,8 @@ namespace API.Migrations
                     ManagerApprovalID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ManagerApprovalStatus = table.Column<int>(type: "int", nullable: false),
-                    OvertimeRequestID = table.Column<int>(type: "int", nullable: false)
+                    OvertimeRequestID = table.Column<int>(type: "int", nullable: false),
+                    ManagerNote = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -262,11 +244,6 @@ namespace API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_otp_AccountID",
-                table: "tb_m_otp",
-                column: "AccountID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_tb_m_overtime_request_NIK",
                 table: "tb_m_overtime_request",
                 column: "NIK");
@@ -289,9 +266,6 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_m_manager_approval");
-
-            migrationBuilder.DropTable(
-                name: "tb_m_otp");
 
             migrationBuilder.DropTable(
                 name: "tb_m_overtime_bonus");

@@ -80,5 +80,30 @@ namespace API.Controllers
                 throw;
             }
         }
+        [HttpPost("ForgotPassword")]
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var forgotPassword = accountRepository.ForgotPassword(forgotPasswordVM);
+            return forgotPassword switch
+            {
+                HttpStatusCode.OK => Ok(new { status = HttpStatusCode.OK, forgotPassword, message = "OTP already sent, please check your email" }),
+                HttpStatusCode.NotFound => BadRequest(new { status = HttpStatusCode.BadRequest, forgotPassword, message = "Email not registered" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, forgotPassword, message = "Your email is empty" })
+            };
+        }
+        [HttpPut("ChangePassword")]
+        public ActionResult ChengePassword(ChangePasswordVM changePasswordVM)
+        {
+            var changePassword = accountRepository.ChangePassword(changePasswordVM);
+            return changePassword switch
+            {
+                HttpStatusCode.OK => Ok(new { status = HttpStatusCode.OK, changePassword, message = "Change Password Success" }),
+                HttpStatusCode.BadRequest => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP expired" }),
+                HttpStatusCode.Forbidden => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP already used" }),
+                HttpStatusCode.NotAcceptable => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP incorrect" }),
+                HttpStatusCode.NotFound => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "Email not registered" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "Change Password Failed, your email is empty" }),
+            };
+        }
     }
 }

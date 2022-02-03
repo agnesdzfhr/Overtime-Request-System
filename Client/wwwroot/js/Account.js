@@ -3,3 +3,24 @@
 
 // Write your JavaScript code.
 
+$('#forgotPassword').submit(function (e) {
+    e.preventDefault();
+    ForgotPassword()
+    $('#forgotPassword').trigger("reset");
+});
+
+function ForgotPassword() {
+    var email = $('#inputEmail').val();
+    var forgotPassword = Object();
+    forgotPassword.email = email;
+    console.log(forgotPassword);
+    $.ajax({
+        url: "/Login/ForgotPassword",
+        type: "POST",
+        data: forgotPassword
+    }).done((result) => {
+        console.log(result.forgotPassword);
+    }).fail((error) => {
+        onsole.log(error);
+    });
+}

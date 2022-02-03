@@ -27,8 +27,6 @@ namespace Client.Repositories.Data
             };
 
         }
-
-
         public async Task<JWTtokenVM> Auth(LoginVM loginVM)
         {
             JWTtokenVM token = null;
@@ -41,6 +39,32 @@ namespace Client.Repositories.Data
 
 
             return token;
+        }
+
+        public Object ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(forgotPasswordVM), Encoding.UTF8, "application/json");
+
+            Object entity = new Object();
+            using (var respone = httpClient.PutAsync(request + "ForgotPassword", content).Result)
+            {
+                string apiResponse = respone.Content.ReadAsStringAsync().Result;
+                entity = JsonConvert.DeserializeObject<Object>(apiResponse);
+            }
+                return entity;
+        }
+
+        public Object ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(changePasswordVM), Encoding.UTF8, "application/json");
+
+            Object entity = new Object();
+            using (var respone = httpClient.PutAsync(request + "ChangePassword", content).Result)
+            {
+                string apiResponse = respone.Content.ReadAsStringAsync().Result;
+                entity = JsonConvert.DeserializeObject<Object>(apiResponse);
+            }
+            return entity;
         }
 
 

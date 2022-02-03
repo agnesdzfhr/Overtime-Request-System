@@ -19,11 +19,11 @@ namespace API.Models
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ManagerApprovalStatus ManagerApprovalStatus { get; set; }
         public int OvertimeRequestID { get; set; }
+        public string ManagerNote { get; set; }
 
         [JsonIgnore]
         [ForeignKey("OvertimeRequestID")]
         public virtual OvertimeRequest OvertimeRequest { get; set; }
-
 
     }
     public enum ManagerApprovalStatus

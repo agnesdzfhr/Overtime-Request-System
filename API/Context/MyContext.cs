@@ -16,7 +16,6 @@ namespace API.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<OTP> OTPs { get; set; }
         public DbSet<AccountRole> AccountRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<OvertimeLimit> OvertimeLimits { get; set; }
@@ -63,10 +62,6 @@ namespace API.Context
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.OvertimeLimit)
                 .WithMany(o => o.Employees);
-
-            modelBuilder.Entity<OTP>()
-                .HasOne(otp => otp.Account)
-                .WithMany(a => a.Otp);
 
             modelBuilder.Entity<FinanceValidation>()
                 .HasOne(fv => fv.OvertimeRequest)

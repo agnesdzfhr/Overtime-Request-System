@@ -32,7 +32,28 @@ namespace Client.Controllers
 
             return RedirectToAction("index", "Home");
         }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public JsonResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var result = repository.ForgotPassword(forgotPasswordVM);
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var result = repository.ChangePassword(changePasswordVM);
+            return Json(result);
+        }
 
         [HttpPost("Login/Auth")]
         public async Task<IActionResult> Auth(LoginVM loginVM)
