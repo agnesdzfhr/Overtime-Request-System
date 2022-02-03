@@ -46,13 +46,14 @@ $(document).ready(function () {
                 }
             },
             {
-                'data': 'overtimeRequestID'
-            },
-            {
-                'data': 'overtimeRequestID',
+                'data': null,
                 'bSortable': false,
                 'render': function (data, type, row, meta) {
-                    return '<div id="addFee"><div id="f1"><button class="btn btn-primary"><i class="fa fa-plus"></i></button></div></div>';
+                    if (data.financeApproval == "Need Approval") {
+                        return '<div id="addFee"><div id="f1"><button class="btn btn-primary"><i class="fa fa-plus"></i></button></div></div>';
+                    } else {
+                        return `<span id="" class="badge Completed">Completed</span>`
+                    }
                 }
             }
         ]
@@ -109,9 +110,6 @@ function submitFeeToDatabase(id, totalFee) {
                 type: "POST",
                 crossDomain: true,
             }).done((result) => {
-                var getId = `<div id="f${id}"><button class="btn btn-success"><i class="fa fa-plus"></i></button></div>`;
-                var ubah = `<span class="badge badge-success">Completed</span>`;
-                $('#f${id}').html(ubah);
                 Swal.fire(
                     'Berhasil',
                     result.messageResult,

@@ -18,6 +18,7 @@ namespace API.Models
         public DateTime Date { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public string TotalTime { get; set; }
         public string JobNote { get; set; }
         public string NIK { get; set; }
 

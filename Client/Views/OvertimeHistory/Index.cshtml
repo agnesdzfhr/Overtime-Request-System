@@ -5,7 +5,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>Employee Request</h1>
+        <h1>DataTables</h1>
     </div>
 
     <div class="section-body">
@@ -14,24 +14,22 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Request Data</h4>
+                        <h4>Basic DataTables</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="tableValidateBonus">
+                            <table class="table table-striped" id="tableHistory">
                                 <thead>
                                     <tr>
                                         <th class="text-center">
                                             No
                                         </th>
-                                        <th>NIK</th>
-                                        <th>Name</th>
                                         <th>Date</th>
                                         <th>Start-Time</th>
                                         <th>End-Time</th>
-                                        <th>Salary</th>
-                                        <th>TotalFee</th>
-                                        <th>Action</th>
+                                        <th>Total Hour</th>
+                                        <th>Job Note</th>
+                                        <th>Approval Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,7 +44,8 @@
 </section>
 
 @section Scripts{
-    <script src="~/js/Finance.js" asp-append-version="true"></script>
+    <script src="~/js/History.js" asp-append-version="true"></script>
 }
+
 
 

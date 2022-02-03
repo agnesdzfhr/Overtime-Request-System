@@ -40,6 +40,18 @@ namespace Client.Repositories.Data
             return entity;
         }
 
+        public async Task<List<OvertimeHistoryVM>> GetOvertimeHistory(string NIK)
+        {
+            List<OvertimeHistoryVM> entity = null;
+
+            using (var response = await httpClient.GetAsync(request + $"GetOvertimeHistory/{NIK}"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entity = JsonConvert.DeserializeObject<List<OvertimeHistoryVM>>(apiResponse);
+            }
+            return entity;
+        }
+
 
     }
 }

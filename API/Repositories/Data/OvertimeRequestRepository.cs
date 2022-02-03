@@ -39,7 +39,7 @@ namespace API.Repositories.Data
 
                 var toEmail = findManagerAcc.Email;
                 var subjectEmail = "Employee Overtime Request";
-                var bodyEmail = "Hi, you has overtime request from your employee, please check this link for more information https://localhost:44376/EmployeeRequest";
+                var bodyEmail = "Hi, you has overtime request from your employee, please check your account for more detail";
 
                 SendEmail(toEmail, subjectEmail, bodyEmail);
 
@@ -142,6 +142,8 @@ namespace API.Repositories.Data
 
             foreach (var item in listRequest)
             {
+                var findFinanceValidation = myContext.FinanceValidations.Where(fv => fv.OvertimeRequestID == item.OvertimeRequestID).FirstOrDefault();
+
                 var salaryEmployee = item.OvertimeRequest.Employee.Salary;
                 var workDayPerMonth = item.OvertimeRequest.Employee.WorkDayPerMonth;
                 var workHourPerDay = item.OvertimeRequest.Employee.WorkHourPerDay;
@@ -159,12 +161,12 @@ namespace API.Repositories.Data
                 if (jamOvertimeInt == 3600)
                 {
                     totalFee = salaryPerHour * firstHour;
-                    query = countBonus(totalFee, item);
+                    query = countBonus(totalFee, item, findFinanceValidation);
                 }
                 else
                 {
                     totalFee = (salaryPerHour * firstHour) + (nextHour * salaryPerHour * ((jamOvertimeInt - 3600)/3600));
-                    query = countBonus(totalFee, item);
+                    query = countBonus(totalFee, item, findFinanceValidation);
                 }
                 result.Add(query);
             }
@@ -172,7 +174,7 @@ namespace API.Repositories.Data
 
         }
 
-        private static OvertimeFinanceApprovalVM countBonus(float totalFee, ManagerApproval item)
+        private static OvertimeFinanceApprovalVM countBonus(float totalFee, ManagerApproval item, FinanceValidation financeValidation)
         {
             var query = new OvertimeFinanceApprovalVM
             {
@@ -184,8 +186,18 @@ namespace API.Repositories.Data
                 JobNote = item.OvertimeRequest.JobNote,
                 Salary = item.OvertimeRequest.Employee.Salary,
                 TotalFee = totalFee,
-                OvertimeRequestID = item.OvertimeRequest.OvertimeRequestID
+                OvertimeRequestID = item.OvertimeRequest.OvertimeRequestID,
             };
+
+            if (financeValidation != null)
+            {
+                query.FinanceApproval = "Completed";
+            }
+            else
+            {
+                query.FinanceApproval = "Need Approval";
+            }
+
             return query;
         }
         public HttpStatusCode InsertCountBonus(FinanceValidation financeValidation)

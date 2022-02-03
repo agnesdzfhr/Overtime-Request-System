@@ -31,5 +31,13 @@ namespace Client.Controllers
             var result = await repository.GetRegisterByNIK(NIK);
             return Json(result);
         }
+
+        [HttpGet("Employees/GetOvertimeHistory")]
+        public async Task<JsonResult> GetOvertimeHistory()
+        {
+            var NIK = HttpContext.Session.GetString("NIK");
+            var result = await repository.GetOvertimeHistory(NIK);
+            return Json(result);
+        }
     }
 }

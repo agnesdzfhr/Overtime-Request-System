@@ -149,6 +149,55 @@ namespace API.Repositories.Data
                 return HttpStatusCode.OK;
             }
         }
-        
+
+        public IEnumerable<OvertimeHistoryVM> GetOvertimeHistory(string NIK)
+        {
+
+            var findRequest = myContext.OvertimesRequests
+                .Where(or => or.NIK == NIK).ToList();
+
+            var listHistory = new List<OvertimeHistoryVM>();
+            foreach (var item in findRequest)
+            {
+                var startTime = TimeSpan.Parse(item.StartTime);
+                var endTime = TimeSpan.Parse(item.EndTime);
+                var totalHour = endTime - startTime;
+                var totalHourString = totalHour.TotalHours.ToString();
+
+                var history = new OvertimeHistoryVM
+                {
+                    Date = item.Date,
+                    DateStr = item.Date.ToString("yyyy-MM-dd"),
+                    StartTime = item.StartTime,
+                    EndTime = item.EndTime,
+                    TotalHour = totalHourString,
+                    JobNote = item.JobNote
+                };
+                var findManagerApproval = myContext.ManagerApprovals
+                    .Where(ma => ma.OvertimeRequestID == item.OvertimeRequestID)
+                    .Select(ma => ma.ManagerApprovalStatus)
+                    .FirstOrDefault();
+                var findFinanceApproval = myContext.FinanceValidations.Where(fv => fv.OvertimeRequestID == item.OvertimeRequestID).FirstOrDefault();
+
+                if (findManagerApproval == 0)
+                {
+                    history.ApprovalStatus = "Need Manager Approval";
+                }
+                else
+                {
+                    if (findFinanceApproval == null)
+                    {
+                        history.ApprovalStatus = OvertimeSchedulesVM.GetApprovalStatus((int)findManagerApproval) + " By Manager";
+                    }
+                    else
+                    {
+                        history.ApprovalStatus = "Completed";
+                    }
+                }
+                listHistory.Add(history);
+            }
+            return listHistory;
+        }
+
     }
 }

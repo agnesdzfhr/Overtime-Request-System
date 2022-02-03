@@ -1,5 +1,7 @@
 ﻿using API.Models;
+using API.ViewModel;
 using Client.Base;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +25,7 @@ namespace Client.Repositories.Data
                 BaseAddress = new Uri(address.link)
             };
         }
+
+
     }
 }

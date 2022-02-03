@@ -60,5 +60,20 @@ namespace API.Controllers
                 throw;
             }
         }
+
+        [HttpGet("GetOvertimeHistory/{nik}")]
+        public ActionResult GetOvertimeHistory(string NIK)
+        {
+            var response = employeeRepository.GetOvertimeHistory(NIK);
+            try
+            {
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

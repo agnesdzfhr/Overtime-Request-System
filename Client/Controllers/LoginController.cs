@@ -23,7 +23,14 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var token = HttpContext.Session.GetString("JWToken");
+
+            if (token == null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("index", "Home");
         }
 
 

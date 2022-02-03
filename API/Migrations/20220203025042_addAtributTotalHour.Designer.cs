@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220203025042_addAtributTotalHour")]
+    partial class addAtributTotalHour
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,7 +247,7 @@ namespace API.Migrations
                     b.Property<string>("StartTime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TotalTime")
+                    b.Property<string>("totalHour")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OvertimeRequestID");

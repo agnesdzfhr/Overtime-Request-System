@@ -10,6 +10,17 @@ function toDate(dStr, format) {
         return "Invalid Format";
 }
 
+function msToTime(duration) {
+    var minutes = Math.floor((duration / (1000 * 60)) % 60),
+        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+
+    return hours + ":" + minutes;
+}
+console.log(msToTime(300000))
+
 
 
 function submitOvertime() {
@@ -18,6 +29,7 @@ function submitOvertime() {
     var obj = new Object();
     obj.NIK = nik;
     obj.OvertimeRequests = listRequest;
+
     console.log(obj);
     var objJson = JSON.stringify(obj);
     console.log(objJson);
@@ -92,10 +104,16 @@ $(document).ready(function () {
             type: "GET"
         }).done((result) => {
             var minus = timeDateEnd - timeDateStart;
-            console.log("minus: " + minus);
+            var totalTime = msToTime(minus);
+            var checkTimeNow = toDate(totalTime, "h:m");
             console.log(result);
             var max = result.maxOvertime.totalMilliseconds;
             console.log("max: " + max);
+
+            var checkDate = listRequest.findIndex((lr) => lr.date === dateList);
+            console.log("check data" + checkDate);
+
+
 
             if (endTimeList <= startTimeList) {
                 Swal.fire({
@@ -114,20 +132,57 @@ $(document).ready(function () {
                 });
             }
             else {
+                if (checkDate !== -1) {
+                    var checkTimeBeforStr = listRequest[checkDate].totalTime;
+                    console.log("time" + listRequest[checkDate].totalTime);
+                    var checkTimeBefore = toDate(checkTimeBeforStr, "h:m");
+                    var checkTimeLimit = checkTimeBefore + minus;
+                    console.log("time limit check" + checkTimeLimit)
+                    if (checkTimeBefore > max) {
+                        console.log("time limit good" + checkTimeLimit)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "Request Failed, Overtime over the limit",
+                            type: 'error'
+                        });
+                    } else {
 
-                var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + noteJobList + "</td>";
-                $("table tbody").append(row);
+                        var objData = new Object();
+                        objData.date = dateList;
+                        objData.startTime = startTimeList;
+                        objData.endTime = endTimeList;
+                        objData.jobNote = noteJobList;
+                        objData.totalTime = totalTime;
+                        console.log(objData);
 
-                var objData = new Object();
-                objData.date = dateList;
-                objData.startTime = startTimeList;
-                objData.endTime = endTimeList;
-                objData.jobNote = noteJobList;
-                console.log(objData);
-                listRequest.push(objData);
-                //MASIH GAGAL
-                //$(".formOvertime").trigger("reset"); //reset form
-                $(".input").val(""); //reset form
+                        var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + "</td>";
+                        $("table tbody").append(row);
+                        listRequest.push(objData);
+
+                        //$(".formOvertime").trigger("reset"); //reset form
+                        $(".input").val(""); //reset form
+                    }
+                } else {
+
+                    var objData = new Object();
+                    objData.date = dateList;
+                    objData.startTime = startTimeList;
+                    objData.endTime = endTimeList;
+                    objData.jobNote = noteJobList;
+                    objData.totalTime = totalTime;
+                    console.log(objData);
+
+                    var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + "</td>";
+                    $("table tbody").append(row);
+                    listRequest.push(objData);
+
+                    //$(".formOvertime").trigger("reset"); //reset form
+                    $(".input").val(""); //reset form
+
+                }
+
+
             }
 
         }).fail((error) => {
