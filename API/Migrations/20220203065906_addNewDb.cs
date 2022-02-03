@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class addManagerNote : Migration
+    public partial class addNewDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -128,6 +128,7 @@ namespace API.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EndTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JobNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NIK = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

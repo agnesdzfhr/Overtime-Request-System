@@ -17,7 +17,7 @@ namespace API.ViewModel
         public string EndTime { get; set; }
         public string JobNote { get; set; }
         public string ApprovalStatus { get; set; }
-
+        public string ManagerNote { get; set; }
         public static string GetApprovalStatus(int approvalStatus)
         {
             switch (approvalStatus)

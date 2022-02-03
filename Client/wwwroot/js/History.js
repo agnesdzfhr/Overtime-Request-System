@@ -35,6 +35,9 @@ $(document).ready(function () {
                 'render': function (data) {
                     return `<span id="needApproval" class="badge ${data.approvalStatus}">${data.approvalStatus}</span>`;
                 }
+            },
+            {
+                'data': 'managerNote'
             }
         ]
     });

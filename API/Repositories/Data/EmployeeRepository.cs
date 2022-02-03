@@ -164,15 +164,8 @@ namespace API.Repositories.Data
                 var totalHour = endTime - startTime;
                 var totalHourString = totalHour.TotalHours.ToString();
 
-                var history = new OvertimeHistoryVM
-                {
-                    Date = item.Date,
-                    DateStr = item.Date.ToString("yyyy-MM-dd"),
-                    StartTime = item.StartTime,
-                    EndTime = item.EndTime,
-                    TotalHour = totalHourString,
-                    JobNote = item.JobNote
-                };
+                var history = new OvertimeHistoryVM();
+                
                 var findManagerApproval = myContext.ManagerApprovals
                     .Where(ma => ma.OvertimeRequestID == item.OvertimeRequestID)
                     .Select(ma => ma.ManagerApprovalStatus)
@@ -182,6 +175,7 @@ namespace API.Repositories.Data
                 if (findManagerApproval == 0)
                 {
                     history.ApprovalStatus = "Need Manager Approval";
+                    history.ManagerNote = "";
                 }
                 else
                 {
@@ -193,7 +187,16 @@ namespace API.Repositories.Data
                     {
                         history.ApprovalStatus = "Completed";
                     }
+                    history.ManagerNote = item.ManagerApproval.ManagerNote;
                 }
+                history.Date = item.Date;
+                history.DateStr = item.Date.ToString("yyyy-MM-dd");
+                history.StartTime = item.StartTime;
+                history.EndTime = item.EndTime;
+                history.TotalHour = totalHourString;
+                history.JobNote = item.JobNote;
+                
+                
                 listHistory.Add(history);
             }
             return listHistory;

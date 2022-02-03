@@ -85,18 +85,19 @@ namespace API.Repositories.Data
         public OvertimeSchedulesVM GetOvertimeRequestByID(int ID)
         {
             var findOvertimeSchedule = myContext.OvertimesRequests.Include(os => os.Employee).Where(e => e.OvertimeRequestID == ID).FirstOrDefault();
-                var result = new OvertimeSchedulesVM
-                {
-                    OvertimeSchedule_ID = findOvertimeSchedule.OvertimeRequestID,
-                    NIK = findOvertimeSchedule.NIK,
-                    FullName = $"{findOvertimeSchedule.Employee.FirstName} {findOvertimeSchedule.Employee.LastName}",
-                    Date = findOvertimeSchedule.Date,
-                    DateStr = findOvertimeSchedule.Date.ToString("yyyy-MM-dd"),
-                    StartTime = findOvertimeSchedule.StartTime,
-                    EndTime = findOvertimeSchedule.EndTime,
-                    JobNote = findOvertimeSchedule.JobNote
+            var result = new OvertimeSchedulesVM();
 
-                };
+
+            result.OvertimeSchedule_ID = findOvertimeSchedule.OvertimeRequestID;
+            result.NIK = findOvertimeSchedule.NIK;
+            result.FullName = $"{findOvertimeSchedule.Employee.FirstName} {findOvertimeSchedule.Employee.LastName}";
+            result.Date = findOvertimeSchedule.Date;
+            result.DateStr = findOvertimeSchedule.Date.ToString("yyyy-MM-dd");
+            result.StartTime = findOvertimeSchedule.StartTime;
+            result.EndTime = findOvertimeSchedule.EndTime;
+            result.JobNote = findOvertimeSchedule.JobNote;
+                    
+                
             return result;
         }
 

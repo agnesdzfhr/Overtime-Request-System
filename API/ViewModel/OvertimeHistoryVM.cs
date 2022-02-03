@@ -14,5 +14,6 @@ namespace API.ViewModel
         public string TotalHour { get; set; }
         public string JobNote { get; set; }
         public string ApprovalStatus { get; set; }
+        public string ManagerNote { get; set; }
     }
 }

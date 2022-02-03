@@ -27,13 +27,11 @@ namespace API.Repositories.Data
                 var result = new ManagerApproval
                 {
                     ManagerApprovalStatus = managerApproval.ManagerApprovalStatus,
-                    OvertimeRequestID = findOvertimeSchedule.OvertimeRequestID
+                    OvertimeRequestID = findOvertimeSchedule.OvertimeRequestID,
+                    ManagerNote = managerApproval.ManagerNote
                 };
                 myContext.ManagerApprovals.Add(result);
                 myContext.SaveChanges();
-
-
-
                 try
                 {
                     var toEmail = findAccount.Account.Email;
@@ -49,13 +47,13 @@ namespace API.Repositories.Data
                     }
                     OvertimeRequestRepository.SendEmail(toEmail, subjectEmail, bodyEmail);
                 }
-                catch(Exception e)
+                catch(Exception )
                 {
                     throw;
                 }
                 return HttpStatusCode.OK;
             }
-            catch(Exception e)
+            catch(Exception )
             {
                 return HttpStatusCode.BadRequest;
             }

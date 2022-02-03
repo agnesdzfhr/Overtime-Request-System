@@ -130,6 +130,7 @@ function getDetail(id) {
         $("#startTimeModal").val(result.startTime);
         $("#endTimeModal").val(result.endTime);
         $("#noteModal").html(result.jobNote);
+        
     }).fail((error) => {
         console.log(error);
     });
@@ -149,10 +150,12 @@ function acceptRequest() {
     }).then((result) => {
         if (result.isConfirmed) {
             id = overtimeID;
+            managerNote = $("#managerNoteModal").val();
 
             obj = new Object();
             obj.managerApprovalStatus = 2;
             obj.overtimeRequestID = id;
+            obj.managerNote = managerNote;
             var objJson = JSON.stringify(obj);
             console.log(objJson);
 
@@ -197,10 +200,12 @@ function rejectRequest() {
     }).then((result) => {
         if (result.isConfirmed) {
             id = overtimeID;
+            managerNote = $("#managerNoteModal").val();
 
             obj = new Object();
             obj.managerApprovalStatus = 1;
             obj.overtimeRequestID = id;
+            obj.managerNote = managerNote;
             var objJson = JSON.stringify(obj);
             console.log(objJson);
 

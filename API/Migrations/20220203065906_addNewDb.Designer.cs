@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220203025316_fixTypo")]
-    partial class fixTypo
+    [Migration("20220203065906_addNewDb")]
+    partial class addNewDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,11 +29,20 @@ namespace API.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ExpiredToken")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TokenOTP")
+                        .HasColumnType("int");
 
                     b.HasKey("AccountID");
 
@@ -156,6 +165,9 @@ namespace API.Migrations
                     b.Property<int>("ManagerApprovalStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("ManagerNote")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OvertimeRequestID")
                         .HasColumnType("int");
 
@@ -165,32 +177,6 @@ namespace API.Migrations
                         .IsUnique();
 
                     b.ToTable("tb_m_manager_approval");
-                });
-
-            modelBuilder.Entity("API.Models.OTP", b =>
-                {
-                    b.Property<int>("OtpID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("ExpiredToken")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TokenOTP")
-                        .HasColumnType("int");
-
-                    b.HasKey("OtpID");
-
-                    b.HasIndex("AccountID");
-
-                    b.ToTable("tb_m_otp");
                 });
 
             modelBuilder.Entity("API.Models.OvertimeBonus", b =>
@@ -247,7 +233,7 @@ namespace API.Migrations
                     b.Property<string>("StartTime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TotalHour")
+                    b.Property<string>("TotalTime")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OvertimeRequestID");
@@ -337,15 +323,6 @@ namespace API.Migrations
                     b.Navigation("OvertimeRequest");
                 });
 
-            modelBuilder.Entity("API.Models.OTP", b =>
-                {
-                    b.HasOne("API.Models.Account", "Account")
-                        .WithMany("Otp")
-                        .HasForeignKey("AccountID");
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("API.Models.OvertimeRequest", b =>
                 {
                     b.HasOne("API.Models.Employee", "Employee")
@@ -358,8 +335,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Account", b =>
                 {
                     b.Navigation("AccountRoles");
-
-                    b.Navigation("Otp");
                 });
 
             modelBuilder.Entity("API.Models.Department", b =>
