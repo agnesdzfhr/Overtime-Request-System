@@ -55,34 +55,6 @@ $.ajax({
     });
 
 
-
-    //console.log(result);
-    //$.ajax({
-    //    url: "https://localhost:44388/API/OvertimeRequests/GetForManager/" + result.nik
-    //}).done((results) => {
-    //    console.log(results);
-    //    var text = "";
-    //    $.each(results, function (key, val) {
-    //        console.log(val.fullName)
-    //        text += `<div class="card shadow" onclick="getDetail(${val.overtimeSchedule_ID})" data-toggle="modal" data-target="#detailModalRequest" style="cursor: pointer;width: auto; height: auto;">
-    //            <div class="card-body">
-    //                <li class="media">
-    //                    <div class="media-body"> 
-    //                        <div id="requesterName" class="mt-0 mb-1 font-weight-bold">${val.fullName} <div id="needApproval" class="badge badge-pill ${val.approvalStatus} float-right">${val.approvalStatus}</div></div>
-    //                        <div class="text-small font-600-bold">has been request for Overtime Schedule. Click this for more information.</div>
-    //                    </div>
-    //                </li>
-    //            </div>
-    //        </div>`;
-    //    });
-    //    console.log(text);
-    //    $("#cardNotification").html(text);
-
-
-    //}).fail((error) => {
-    //    console.log(error);
-    //})
-
 }).fail((error) => {
     console.log(error)
 })

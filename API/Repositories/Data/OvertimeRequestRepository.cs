@@ -79,7 +79,7 @@ namespace API.Repositories.Data
 
             var listResultDescending = listResult.OrderByDescending(lr => lr.OvertimeSchedule_ID).ToList();
 
-            return listResultDescending;
+            return listResult;
         }
 
         public OvertimeSchedulesVM GetOvertimeRequestByID(int ID)
@@ -204,6 +204,7 @@ namespace API.Repositories.Data
         public HttpStatusCode InsertCountBonus(FinanceValidation financeValidation)
         {
             var checkOvertimeReqID = myContext.OvertimesRequests.Where(or => or.OvertimeRequestID == financeValidation.OvertimeRequestID).FirstOrDefault();
+            var findEmail = myContext.Employees.Where(e => e.NIK == checkOvertimeReqID.NIK).Include(e => e.Account).FirstOrDefault();
 
             if (checkOvertimeReqID == null)
             {
@@ -218,6 +219,13 @@ namespace API.Repositories.Data
                 };
                 myContext.FinanceValidations.Add(financeBonus);
                 myContext.SaveChanges();
+
+                var toEmail = findEmail.Account.Email;
+                var subjectEmail = "Finance Validation";
+                var bodyEmal = "Finance has been validate your request";
+
+                SendEmail(toEmail, subjectEmail, bodyEmal);
+
                 return HttpStatusCode.OK;
             }
         }

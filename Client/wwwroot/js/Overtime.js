@@ -83,9 +83,6 @@ $('#submitRequestOvertime').submit(function (e) {
 });
 
 let listRequest = [];
-
-
-
 $(document).ready(function () {
     $("#buttonAdd").click(function () {
         var dateList = $("#date").val();
@@ -105,7 +102,6 @@ $(document).ready(function () {
         }).done((result) => {
             var minus = timeDateEnd - timeDateStart;
             var totalTime = msToTime(minus);
-            var checkTimeNow = toDate(totalTime, "h:m");
             console.log(result);
             var max = result.maxOvertime.totalMilliseconds;
             console.log("max: " + max);
@@ -136,9 +132,10 @@ $(document).ready(function () {
                     var checkTimeBeforStr = listRequest[checkDate].totalTime;
                     console.log("time" + listRequest[checkDate].totalTime);
                     var checkTimeBefore = toDate(checkTimeBeforStr, "h:m");
+                    console.log("minus"+minus);
                     var checkTimeLimit = checkTimeBefore + minus;
                     console.log("time limit check" + checkTimeLimit)
-                    if (checkTimeBefore > max) {
+                    if (checkTimeLimit > max) {
                         console.log("time limit good" + checkTimeLimit)
                         Swal.fire({
                             icon: 'error',
@@ -156,9 +153,15 @@ $(document).ready(function () {
                         objData.totalTime = totalTime;
                         console.log(objData);
 
-                        var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + "</td>";
-                        $("table tbody").append(row);
+                      
                         listRequest.push(objData);
+                        var number = parseInt(listRequest.indexOf(objData));
+                        var nomor = number + 1;
+                        console.log(listRequest.indexOf(objData));
+                        console.log(number);
+                        console.log(listRequest);
+                        var row = "<tr><td>" + nomor + "</td><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + `</td><td><button class="btn btn-danger"" onclick="deleteListRequest(${number})" type="button">X</button></tr>`;
+                        $("table tbody").append(row);
 
                         //$(".formOvertime").trigger("reset"); //reset form
                         $(".input").val(""); //reset form
@@ -172,10 +175,11 @@ $(document).ready(function () {
                     objData.jobNote = noteJobList;
                     objData.totalTime = totalTime;
                     console.log(objData);
-
-                    var row = "<tr><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + "</td>";
-                    $("table tbody").append(row);
                     listRequest.push(objData);
+                    var number = parseInt(listRequest.indexOf(objData));
+                    var nomor = number + 1;
+                    var row = "<tr><td>" + nomor + "</td><td>" + dateList + "</td><td>" + startTimeList + "</td><td>" + endTimeList + "</td><td>" + totalTime + "</td><td>" + noteJobList + `</td><td><button class="btn btn-danger"" onclick="deleteListRequest(${number})" type="button">X</button></tr>`;
+                    $("table tbody").append(row);
 
                     //$(".formOvertime").trigger("reset"); //reset form
                     $(".input").val(""); //reset form
@@ -193,4 +197,19 @@ $(document).ready(function () {
 
     });
 });
+
+
+function deleteListRequest(id) {
+    console.log("hey" + id);
+    var tableSubmit = document.getElementById("tableSubmit")
+    tableSubmit.deleteRow(id+1);
+
+    listRequest.splice(id)
+}
+
+
+if (localStorage.getItem('listRequest')) {
+    listRequest = JSON.parse(localStorage.getItem('listRequest'));
+}
+localStorage.setItem('listRequest', JSON.stringify(listRequest));
 
