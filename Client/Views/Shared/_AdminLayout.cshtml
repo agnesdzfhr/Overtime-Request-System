@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Blank Page — Stisla</title>
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/lib/assets/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/fontawesome/css/all.min.css">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/datatables.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/lib/assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/lib/assets/css/style.css">
+    <link rel="stylesheet" href="~/lib/assets/css/components.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <!-- Start GA -->
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-94034622-3');</script>
+    <!-- /END GA -->
+</head>
+
+<body>
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1">
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <form class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+                    </ul>
+                </form>
+                <ul class="navbar-nav navbar-right">
+                    <li class="dropdown dropdown-list-toggle">
+                        <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+                        <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                            <div class="dropdown-header">
+                                Notifications
+                                <div class="float-right">
+                                    <a href="#">Mark All As Read</a>
+                                </div>
+                            </div>
+                            <div class="dropdown-list-content dropdown-list-icons">
+                                <a href="#" class="dropdown-item dropdown-item-unread">
+                                    <div class="dropdown-item-icon bg-primary text-white">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="dropdown-item-desc">
+                                        Template update is available now!
+                                        <div class="time text-primary">2 Min Ago</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="dropdown-item-icon bg-info text-white">
+                                        <i class="far fa-user"></i>
+                                    </div>
+                                    <div class="dropdown-item-desc">
+                                        <b>You</b> and <b>Dedik Sugiharto</b> are now friends
+                                        <div class="time">10 Hours Ago</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="dropdown-item-icon bg-success text-white">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="dropdown-item-desc">
+                                        <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
+                                        <div class="time">12 Hours Ago</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="dropdown-item-icon bg-danger text-white">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="dropdown-item-desc">
+                                        Low disk space. Let's clean it!
+                                        <div class="time">17 Hours Ago</div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="dropdown-item-icon bg-info text-white">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div class="dropdown-item-desc">
+                                        Welcome to Stisla template!
+                                        <div class="time">Yesterday</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="dropdown-footer text-center">
+                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="~/lib/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">Hi, <span id="userName"></span></div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-title">NIK: <span id="nikUser2"></span></div>
+                            <a href="features-profile.html" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profile
+                            </a>
+                            <a href="features-activities.html" class="dropdown-item has-icon">
+                                <i class="fas fa-bolt"></i> Activities
+                            </a>
+                            <a href="features-settings.html" class="dropdown-item has-icon">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="../Logout" class="dropdown-item has-icon text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="main-sidebar sidebar-style-2" tabindex="1" style="overflow: hidden; outline: none;">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Overtime Request</a>
+                    </div>
+                    <div class="sidebar-brand sidebar-brand-sm">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">OR</a>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="menu-header">Dashboard</li>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                        </li>
+                        <li class="menu-header">Menu</li>
+                        <li class="dropdown">
+                            <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i><span>Menu</span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a asp-area="" asp-controller="RequestForm" asp-action="Index" class="nav-link"><span>Request Form</span></a>
+                                </li>
+                                @if ((User.IsInRole("Manager")) || (User.IsInRole("Admin")))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="Index" class="nav-link"><span>Employee Request (M)</span></a>
+                                    </li>
+                                }
+                                @if ((User.IsInRole("Finance")) || (User.IsInRole("Admin")))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="EmployeeRequest" asp-action="ValidateBonus" class="nav-link"><span>Employee Request (F)</span></a>
+                                    </li>
+                                }
+                                <li>
+                                    <a asp-area="" asp-controller="OvertimeHistory" asp-action="Index" class="nav-link"><span>Overtime Request History</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="menu-header">Manage APP</li>
+                            <li>
+                                <a asp-area="" asp-controller="Home" asp-action="ManageUser" class="nav-link"><i class="far fa-user"></i><span>Manage User</span></a>
+                            </li>
+                        }
+
+
+                    </ul>
+                </aside>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content" style="min-height: 562px;">
+                @RenderBody()
+            </div>
+            <footer class="main-footer">
+                <div class="text-center">
+                    &copy; 2022 -  PT Mitra Integrasi Informatika. All Rights Reserved.
+                </div>
+                <div class="footer-right">
+
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- General JS Scripts -->
+    <script src="~/lib/assets/modules/jquery.min.js"></script>
+    <script src="~/lib/assets/modules/popper.js"></script>
+    <script src="~/lib/assets/modules/tooltip.js"></script>
+    <script src="~/lib/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="~/lib/assets/modules/moment.min.js"></script>
+    <script src="~/lib/assets/js/stisla.js"></script>
+
+    <!-- JS Libraies -->
+    <script src="~/lib/assets/modules/datatables/datatables.min.js"></script>
+    <script src="~/lib/assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
+    <script src="~/lib/assets/modules/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="~/lib/assets/js/page/modules-datatables.js"></script>
+
+    <!-- Template JS File -->
+    <script src="~/lib/assets/js/scripts.js"></script>
+    <script src="~/lib/assets/js/custom.js"></script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+    <script src="~/js/Manager.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.4/dist/sweetalert2.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: 892; cursor: default; position: fixed; top: 0px; left: 242px; height: 657px; opacity: 0;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 432px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: 892; top: 649px; left: 0px; position: fixed; cursor: default; display: none; width: 242px; opacity: 0;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 250px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;"></div></div>
+</body>
+</html>

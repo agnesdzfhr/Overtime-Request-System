@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "Overtime Request Form";
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-header d-flex justify-content-center shadow">
+        <h1>Overtime Request Form</h1>
+    </div>
+    <div class="section-body">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <form id="formOvertime">
+                            <div class="form-group">
+                                <label>NIK</label>
+                                <input type="text" class="form-control" id="nikUser" value="" readonly>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" id="firstName" value="" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <input type="text" class="form-control" id="department" value="" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" class="form-control input" id="date" value="" required>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Start Time</label>
+                                    <input type="time" name="time" class="form-control input" id="startTime" value="" required>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>End Time</label>
+                                    <input type="time" name="time" class="form-control input" id="endTime" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Job Note</label>
+                                <textarea id="overtimeNote" class="form-control input" maxlength="500" rows="5" placeholder="This notes has a limit of 500 chars."></textarea>
+                            </div>
+                            <button id="buttonAdd" type="button" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                <form id="submitRequestOvertime">
+                    <table id="tableSubmit" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Total Time</th>
+                                <th scope="col">Job Note</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+</section>
+
+@section Scripts{
+    <script src="~/js/Overtime.js" asp-append-version="true"></script>
+}

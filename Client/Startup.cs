@@ -33,6 +33,7 @@ namespace Client
             services.AddMvc().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddScoped<AccountRepository>();
+            services.AddScoped<EmployeeRepository>();
             services.AddScoped<Address>();
 
             services.AddSession();
@@ -96,18 +97,18 @@ namespace Client
                 var request = context.HttpContext.Request;
                 var response = context.HttpContext.Response;
 
-                //if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
-                //{
-                //    response.Redirect("/Home/Unauthorized401");
-                //}
-                //else if (response.StatusCode == (int)HttpStatusCode.NotFound)
-                //{
-                //    response.Redirect("/Home/NotFound404");
-                //}
-                //else if (response.StatusCode == (int)HttpStatusCode.Forbidden)
-                //{
-                //    response.Redirect("/Home/Forbidden403");
-                //}
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+                {
+                    response.Redirect("/Error/Unauthorized401");
+                }
+                else if (response.StatusCode == (int)HttpStatusCode.NotFound)
+                {
+                    response.Redirect("/Error/NotFound404");
+                }
+                else if (response.StatusCode == (int)HttpStatusCode.Forbidden)
+                {
+                    response.Redirect("/Errpr/Forbidden403");
+                }
 
             });
 

@@ -29,21 +29,50 @@ namespace API.Controllers
         public ActionResult Register(RegisterVM registerVM)
         {
             var register = employeeRepository.Register(registerVM);
-            if (register == 0)
+            switch (register)
             {
-                return Ok(register);
+                case HttpStatusCode.OK:
+                    return Ok(register);
+                case HttpStatusCode.Conflict:
+                    return Ok(new { status = register, message = "Email Already Used" });
+                default:
+                    return Ok(new { status = register, message = "Phone Already Used" });
             }
-            else if (register == 1)
+        }
+
+        [HttpGet]
+        [Route("GetRegisterData/{nik}")]
+        public ActionResult<Object> GetRegisterData(string NIK)
+        {
+            try
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, register, message = "Email Duplicate" });
+                var getRegisterData = employeeRepository.GetRegisteredData(NIK);
+                if (getRegisterData != null)
+                {
+                    //return Ok(new{ message="Data Found",data=getRegisterData});
+                    return getRegisterData;
+                }
+                return getRegisterData;
             }
-            else if (register == 2)
+            catch (Exception)
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, register, message = "Phone Duplicate" });
+
+                throw;
             }
-            else
+        }
+
+        [HttpGet("GetOvertimeHistory/{nik}")]
+        public ActionResult GetOvertimeHistory(string NIK)
+        {
+            var response = employeeRepository.GetOvertimeHistory(NIK);
+            try
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Can't Insert Data, NIK Duplicate" }); 
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
             }
         }
     }

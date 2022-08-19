@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_Role")]
+    [Table("tb_m_role")]
     public class Role
     {
         [Key]
-        public string Role_ID { get; set; }
+        public string RoleID { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
         public virtual ICollection<AccountRole> AccountRoles { get; set; }

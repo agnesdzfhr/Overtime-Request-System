@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.Context;
 using API.Models;
 using API.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using static API.Repositories.Data.AccountRepository;
 
 namespace API.Repositories.Data
@@ -20,11 +22,11 @@ namespace API.Repositories.Data
         {
             var query = from emp in myContext.Employees
                         join dp in myContext.Departments
-                          on emp.Department_ID equals dp.Department_ID
+                          on emp.DepartmentID equals dp.DepartmentID
                         join acc in myContext.Accounts
                           on emp.NIK equals acc.NIK
                         join accr in myContext.AccountRoles
-                          on acc.Account_ID equals accr.Account_ID
+                          on acc.AccountID equals accr.AccountID
                         select new
                         {
                             NIK = emp.NIK,
@@ -33,47 +35,83 @@ namespace API.Repositories.Data
                             Gender = emp.Gender.ToString(),
                             Email = acc.Email,
                             Salary = emp.Salary,
-                            Department_ID = dp.Department_ID 
+                            Department_ID = dp.DepartmentID 
                         };
             return query;
         }
-        public int Register(RegisterVM registerVM)//bikin pengecekan email dan nomorHp
+
+        public RegisterVM GetRegisteredData(string NIK)
+        {
+            var query = myContext.Employees.Where(e => e.NIK == NIK)
+                                        .Include(e=>e.Department)
+                                        .Include(e => e.Account)
+                                        .ThenInclude(a => a.AccountRoles)
+                                        .ThenInclude(ar => ar.Role)
+                                        .FirstOrDefault();
+
+            if (query == null)
+            {
+                return null;
+            }
+
+            var grd = new RegisterVM
+            {
+                NIK = query.NIK,
+                FirstName = query.FirstName,
+                LastName = query.LastName,
+                Gender = query.Gender,
+                Phone = query.Phone,
+                Salary = query.Salary,
+                //Gender = RegisterVM.GetGender((int)e.Gender),
+                Department = query.Department.Name,
+                Email = query.Account.Email,
+                //Password = query.Account.Password,
+                Role = query.Account.AccountRoles.Where(ar => ar.AccountID == query.Account.AccountID).Select(ar => ar.Role.Name).ToList()
+
+
+            };
+
+            return grd;
+        }
+
+
+        public HttpStatusCode Register(RegisterVM registerVM)//bikin pengecekan email dan nomorHp
         {
             var checkEmail = myContext.Accounts.Any(x => x.Email == registerVM.Email);
             var checkPhone = myContext.Employees.Any(x => x.Phone == registerVM.Phone);
-            var increamentEmp = myContext.Employees.ToList().Count;
-            var increamentAcc = myContext.Accounts.ToList().Count;
+            var incrementEmp = myContext.Employees.ToList().Count;
+            var incrementAcc = myContext.Accounts.ToList().Count;
             var formattedNIK = "";
-            if (increamentEmp == 0)
+            if (incrementEmp == 0)
             {
-                formattedNIK = DateTime.Now.Year.ToString() + "0" + (increamentEmp + 1).ToString();
+                formattedNIK = DateTime.Now.Year.ToString() + "0" + (incrementEmp + 1).ToString();
 
             }
             else
             {
-                var increamentEmp2 = myContext.Employees.ToList().Max(e => e.NIK);
-                formattedNIK = (Int32.Parse(increamentEmp2) + 1).ToString();
+                var incrementEmp2 = myContext.Employees.ToList().Max(e => e.NIK);
+                formattedNIK = (Int32.Parse(incrementEmp2) + 1).ToString();
 
             }
             var formattedAccID = "";
-            if (increamentAcc == 0)
+            if (incrementAcc == 0)
             {
-                formattedAccID = "A" + "0" + (increamentAcc + 1).ToString();
+                formattedAccID = 1000 + (incrementAcc + 1).ToString();
 
             }
             else
             {
-                var increamentAcc2 = myContext.Employees.ToList().Max(e => e.NIK);
-                formattedAccID = (Int32.Parse(increamentAcc2) + 1).ToString();
+                var incrementAcc2 = myContext.Accounts.ToList().Max(a=> a.AccountID);
+                formattedAccID = (Int32.Parse(incrementAcc2) + 1).ToString();
 
             }
             if (checkEmail)
             {
-                return 1;
+                return HttpStatusCode.Conflict;
             }
             else if (checkPhone)
             {
-                return 2;
+                return HttpStatusCode.BadRequest;
             }
             else
             {
@@ -84,14 +122,17 @@ namespace API.Repositories.Data
                     LastName = registerVM.LastName,
                     Phone = registerVM.Phone,
                     Salary = registerVM.Salary,
+                    WorkHourPerDay = 8,
+                    WorkDayPerMonth = 20,
                     Gender = registerVM.Gender,
-                    Department_ID = registerVM.Department_ID
+                    DepartmentID = registerVM.Department,
+                    OvertimeLimitID = "OL01"
                 };
                 myContext.Employees.Add(emp);
                 myContext.SaveChanges();
                 var acc = new Account
                 {
-                    Account_ID = formattedAccID,
+                    AccountID = formattedAccID,
                     NIK = emp.NIK,
                     Email = registerVM.Email,
                     Password = Hashing.HashPassword(registerVM.Password)
@@ -100,14 +141,66 @@ namespace API.Repositories.Data
                 myContext.SaveChanges();
                 var accountRole = new AccountRole
                 {
-                    Account_ID = acc.Account_ID,
-                    Role_ID = "R02"
+                    AccountID = acc.AccountID,
+                    RoleID = "R02"
                 };
                 myContext.AccountRoles.Add(accountRole);
                 myContext.SaveChanges();
-                return 0;
+                return HttpStatusCode.OK;
             }
         }
-        
+
+        public IEnumerable<OvertimeHistoryVM> GetOvertimeHistory(string NIK)
+        {
+
+            var findRequest = myContext.OvertimesRequests
+                .Where(or => or.NIK == NIK).ToList();
+
+            var listHistory = new List<OvertimeHistoryVM>();
+            foreach (var item in findRequest)
+            {
+                var startTime = TimeSpan.Parse(item.StartTime);
+                var endTime = TimeSpan.Parse(item.EndTime);
+                var totalHour = endTime - startTime;
+                var totalHourString = totalHour.TotalHours.ToString();
+
+                var history = new OvertimeHistoryVM();
+                
+                var findManagerApproval = myContext.ManagerApprovals
+                    .Where(ma => ma.OvertimeRequestID == item.OvertimeRequestID)
+                    .Select(ma => ma.ManagerApprovalStatus)
+                    .FirstOrDefault();
+                var findFinanceApproval = myContext.FinanceValidations.Where(fv => fv.OvertimeRequestID == item.OvertimeRequestID).FirstOrDefault();
+
+                if (findManagerApproval == 0)
+                {
+                    history.ApprovalStatus = "Need Manager Approval";
+                    history.ManagerNote = "";
+                }
+                else
+                {
+                    if (findFinanceApproval == null)
+                    {
+                        history.ApprovalStatus = OvertimeSchedulesVM.GetApprovalStatus((int)findManagerApproval) + " By Manager";
+                    }
+                    else
+                    {
+                        history.ApprovalStatus = "Completed";
+                    }
+                    history.ManagerNote = item.ManagerApproval.ManagerNote;
+                }
+                history.Date = item.Date;
+                history.DateStr = item.Date.ToString("yyyy-MM-dd");
+                history.StartTime = item.StartTime;
+                history.EndTime = item.EndTime;
+                history.TotalHour = totalHourString;
+                history.JobNote = item.JobNote;
+                
+                
+                listHistory.Add(history);
+            }
+            return listHistory;
+        }
+
     }
 }

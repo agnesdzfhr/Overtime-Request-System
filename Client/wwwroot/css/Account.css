@@ -13,15 +13,7 @@
     z-index: 3;
 }
 
-body {
-    background-color: /*#F2F2F2*/ #A9A4FF;
-    font-family: sans-serif;
-}
 
-#copyright {
-    z-index: 3;
-    margin-top: 123px;
-}
 
 /*#btnLogin {
     background-color: #394EEA;

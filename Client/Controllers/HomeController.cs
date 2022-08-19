@@ -25,6 +25,16 @@ namespace Client.Controllers
             return View();
         }
 
+        public IActionResult OvertimeRequest()
+        {
+            return View();
+        }
+
+        public IActionResult OvertimeHistory()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

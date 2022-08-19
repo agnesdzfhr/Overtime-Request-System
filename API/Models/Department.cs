@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_Department")]
+    [Table("tb_m_department")]
     public class Department
     {
         [Key]
-        public string Department_ID { get; set; }
+        public string DepartmentID { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }

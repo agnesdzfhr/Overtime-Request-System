@@ -42,12 +42,15 @@ namespace API.Controllers
 
                 switch (login)
                 {
-                    case 1:
+                    case HttpStatusCode.OK:
                         var getRoles = accountRepository.GetRoles(loginVM.Email);
+                        var findAcc = myContext.Accounts.FirstOrDefault(a => a.Email == loginVM.Email);
+                        var findEmp = myContext.Employees.FirstOrDefault(e=>e.NIK == findAcc.NIK);
 
                         var claims = new List<Claim>
                         {
                             new Claim("email", loginVM.Email),
+                            new Claim("nik", findEmp.NIK)
 
                         };
                         foreach (var roleData in getRoles)
@@ -67,12 +70,8 @@ namespace API.Controllers
                         var idToken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("TokenSecurity", idToken.ToString()));
                         return Ok(new JWTtokenVM { status = HttpStatusCode.OK, idtoken = idToken, message = "Login Success" });
-                    case 2:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Wrong Password" });
-                    case 3:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.NotFound, idtoken = null, message = "Email Not Found" });
                     default:
-                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Login Failed" });
+                        return Ok(new JWTtokenVM { status = HttpStatusCode.BadRequest, idtoken = null, message = "Email or Password Wrong"});
                 }
 
             }
@@ -80,6 +79,31 @@ namespace API.Controllers
             {
                 throw;
             }
+        }
+        [HttpPost("ForgotPassword")]
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var forgotPassword = accountRepository.ForgotPassword(forgotPasswordVM);
+            return forgotPassword switch
+            {
+                HttpStatusCode.OK => Ok(new { status = HttpStatusCode.OK, forgotPassword, message = "OTP already sent, please check your email" }),
+                HttpStatusCode.NotFound => BadRequest(new { status = HttpStatusCode.BadRequest, forgotPassword, message = "Email not registered" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, forgotPassword, message = "Your email is empty" })
+            };
+        }
+        [HttpPut("ChangePassword")]
+        public ActionResult ChengePassword(ChangePasswordVM changePasswordVM)
+        {
+            var changePassword = accountRepository.ChangePassword(changePasswordVM);
+            return changePassword switch
+            {
+                HttpStatusCode.OK => Ok(new { status = HttpStatusCode.OK, changePassword, message = "Change Password Success" }),
+                HttpStatusCode.BadRequest => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP expired" }),
+                HttpStatusCode.Forbidden => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP already used" }),
+                HttpStatusCode.NotAcceptable => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "OTP incorrect" }),
+                HttpStatusCode.NotFound => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "Email not registered" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, changePassword, message = "Change Password Failed, your email is empty" }),
+            };
         }
     }
 }

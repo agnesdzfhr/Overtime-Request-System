@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    [Table("TB_M_OvertimeBonus")]
+    [Table("tb_m_overtime_bonus")]
     public class OvertimeBonus
     {
         [Key]
-        public int OvertimeBonus_ID { get; set; }
-        public float TotalBonus { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<OvertimeSchedule> OvertimeSchedules { get; set; }
+        public string OvertimeBonusID { get; set; }
+        public string Hour { get; set; }
+        public float CommisionPct { get; set; }
     }
 }

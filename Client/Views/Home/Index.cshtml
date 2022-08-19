@@ -1,8 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_AdminLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="section">
+    <div class="section-header d-flex justify-content-center shadow">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                    <h2>Overtime Request</h2>
+                    <p class="lead">You can request overtime by click the button below</p>
+                    <div class="mt-4">
+                        <a href="/RequestForm" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-4">
+            <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                    <h2>Request History</h2>
+                    <p class="lead">You can see your request history by click the button below</p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-white btn-lg btn-icon icon-left"><i class="far fa-user"></i>Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

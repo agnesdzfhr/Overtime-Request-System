@@ -15,13 +15,14 @@ namespace API.Context
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<EmployeeOvertimeSchedule> EmployeeOvertimeSchedules { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountRole> AccountRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Overtime> Overtimes { get; set; }
+        public DbSet<OvertimeLimit> OvertimeLimits { get; set; }
         public DbSet<OvertimeBonus> OvertimeBonuses { get; set; }
-        public DbSet<OvertimeSchedule> OvertimesSchedules { get; set; }
+        public DbSet<OvertimeRequest> OvertimesRequests { get; set; }
+        public DbSet<ManagerApproval> ManagerApprovals { get; set; }
+        public DbSet<FinanceValidation> FinanceValidations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,26 +54,26 @@ namespace API.Context
                 .WithMany(r => r.AccountRoles);
 
             //One to Many
-            modelBuilder.Entity<EmployeeOvertimeSchedule>()
-                .HasOne(eo => eo.Employee)
-                .WithMany(e => e.EmployeeOvertimeSchedules);
+            modelBuilder.Entity<OvertimeRequest>()
+                .HasOne(os => os.Employee)
+                .WithMany(e => e.OvertimeSchedules);
 
             //One to Many
-            modelBuilder.Entity<EmployeeOvertimeSchedule>()
-                .HasOne(eo => eo.OvertimeSchedule)
-                .WithMany(os => os.EmployeeOvertimeSchedules);
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.OvertimeLimit)
+                .WithMany(o => o.Employees);
 
-            //One to Many
-            modelBuilder.Entity<OvertimeSchedule>()
-                .HasOne(os => os.Overtime)
-                .WithMany(o => o.OvertimeSchedules);
+            modelBuilder.Entity<FinanceValidation>()
+                .HasOne(fv => fv.OvertimeRequest)
+                .WithOne(or => or.FinanceValidation)
+                .HasForeignKey<FinanceValidation>(fv=> fv.OvertimeRequestID);
 
-            //One to Many
-            modelBuilder.Entity<OvertimeSchedule>()
-                .HasOne(os => os.OvertimeBonus)
-                .WithMany(ob => ob.OvertimeSchedules);
+            modelBuilder.Entity<ManagerApproval>()
+                .HasOne(ma=>ma.OvertimeRequest)
+                .WithOne(or => or.ManagerApproval)
+                .HasForeignKey<ManagerApproval>(ma=>ma.OvertimeRequestID);
+
         }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();

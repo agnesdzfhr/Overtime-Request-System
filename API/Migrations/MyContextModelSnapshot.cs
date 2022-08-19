@@ -21,69 +21,69 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Account", b =>
                 {
-                    b.Property<string>("Account_ID")
+                    b.Property<string>("AccountID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ExpiredToken")
+                    b.Property<DateTime>("ExpiredToken")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsUsed")
+                    b.Property<bool>("IsUsed")
                         .HasColumnType("bit");
 
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("OTP")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Account_ID");
+                    b.Property<int>("TokenOTP")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccountID");
 
                     b.HasIndex("NIK")
                         .IsUnique()
                         .HasFilter("[NIK] IS NOT NULL");
 
-                    b.ToTable("TB_M_Account");
+                    b.ToTable("tb_m_account");
                 });
 
             modelBuilder.Entity("API.Models.AccountRole", b =>
                 {
-                    b.Property<int>("AccountRole_ID")
+                    b.Property<int>("AccountRoleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Account_ID")
+                    b.Property<string>("AccountID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Role_ID")
+                    b.Property<string>("RoleID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AccountRole_ID");
+                    b.HasKey("AccountRoleID");
 
-                    b.HasIndex("Account_ID");
+                    b.HasIndex("AccountID");
 
-                    b.HasIndex("Role_ID");
+                    b.HasIndex("RoleID");
 
-                    b.ToTable("TB_TR_AccountRole");
+                    b.ToTable("tb_tr_account_role");
                 });
 
             modelBuilder.Entity("API.Models.Department", b =>
                 {
-                    b.Property<string>("Department_ID")
+                    b.Property<string>("DepartmentID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Department_ID");
+                    b.HasKey("DepartmentID");
 
-                    b.ToTable("TB_M_Department");
+                    b.ToTable("tb_m_department");
                 });
 
             modelBuilder.Entity("API.Models.Employee", b =>
@@ -91,7 +91,7 @@ namespace API.Migrations
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Department_ID")
+                    b.Property<string>("DepartmentID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
@@ -103,7 +103,10 @@ namespace API.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Manager_ID")
+                    b.Property<string>("ManagerID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OvertimeLimitID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Phone")
@@ -112,119 +115,143 @@ namespace API.Migrations
                     b.Property<float>("Salary")
                         .HasColumnType("real");
 
+                    b.Property<int>("WorkDayPerMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkHourPerDay")
+                        .HasColumnType("int");
+
                     b.HasKey("NIK");
 
-                    b.HasIndex("Department_ID");
+                    b.HasIndex("DepartmentID");
 
-                    b.HasIndex("Manager_ID");
+                    b.HasIndex("ManagerID");
 
-                    b.ToTable("TB_M_Employee");
+                    b.HasIndex("OvertimeLimitID");
+
+                    b.ToTable("tb_m_employee");
                 });
 
-            modelBuilder.Entity("API.Models.EmployeeOvertimeSchedule", b =>
+            modelBuilder.Entity("API.Models.FinanceValidation", b =>
                 {
-                    b.Property<int>("EmployeeOvertimeSchedule_ID")
+                    b.Property<int>("FinanceValidationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NIK")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("OvertimeSchedule_ID")
+                    b.Property<int>("OvertimeRequestID")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeOvertimeSchedule_ID");
+                    b.Property<float>("TotalFee")
+                        .HasColumnType("real");
 
-                    b.HasIndex("NIK");
+                    b.HasKey("FinanceValidationID");
 
-                    b.HasIndex("OvertimeSchedule_ID");
+                    b.HasIndex("OvertimeRequestID")
+                        .IsUnique();
 
-                    b.ToTable("TB_TR_EmployeeOvertimeSchedule");
+                    b.ToTable("tb_m_finance_validation");
                 });
 
-            modelBuilder.Entity("API.Models.Overtime", b =>
+            modelBuilder.Entity("API.Models.ManagerApproval", b =>
                 {
-                    b.Property<string>("Overtime_ID")
+                    b.Property<int>("ManagerApprovalID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ManagerApprovalStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ManagerNote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OvertimeRequestID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ManagerApprovalID");
+
+                    b.HasIndex("OvertimeRequestID")
+                        .IsUnique();
+
+                    b.ToTable("tb_m_manager_approval");
+                });
+
+            modelBuilder.Entity("API.Models.OvertimeBonus", b =>
+                {
+                    b.Property<string>("OvertimeBonusID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("CommisionPct")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("MaxOvertime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Hour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OvertimeBonusID");
+
+                    b.ToTable("tb_m_overtime_bonus");
+                });
+
+            modelBuilder.Entity("API.Models.OvertimeLimit", b =>
+                {
+                    b.Property<string>("OvertimeLimitID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<TimeSpan>("MaxOvertime")
+                        .HasColumnType("time");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Overtime_ID");
+                    b.HasKey("OvertimeLimitID");
 
-                    b.ToTable("TB_M_Overtime");
+                    b.ToTable("tb_m_overtime_limit");
                 });
 
-            modelBuilder.Entity("API.Models.OvertimeBonus", b =>
+            modelBuilder.Entity("API.Models.OvertimeRequest", b =>
                 {
-                    b.Property<int>("OvertimeBonus_ID")
+                    b.Property<int>("OvertimeRequestID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("TotalBonus")
-                        .HasColumnType("real");
-
-                    b.HasKey("OvertimeBonus_ID");
-
-                    b.ToTable("TB_M_OvertimeBonus");
-                });
-
-            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
-                {
-                    b.Property<int>("OvertimeSchedule_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsApprove")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
+                    b.Property<string>("EndTime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OvertimeBonus_ID")
-                        .HasColumnType("int");
+                    b.Property<string>("JobNote")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Overtime_ID")
+                    b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OvertimeSchedule_ID");
+                    b.Property<string>("TotalTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("OvertimeBonus_ID");
+                    b.HasKey("OvertimeRequestID");
 
-                    b.HasIndex("Overtime_ID");
+                    b.HasIndex("NIK");
 
-                    b.ToTable("TB_M_OvertimeSchedule");
+                    b.ToTable("tb_m_overtime_request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
                 {
-                    b.Property<string>("Role_ID")
+                    b.Property<string>("RoleID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Role_ID");
+                    b.HasKey("RoleID");
 
-                    b.ToTable("TB_M_Role");
+                    b.ToTable("tb_m_role");
                 });
 
             modelBuilder.Entity("API.Models.Account", b =>
@@ -240,11 +267,11 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Account", "Account")
                         .WithMany("AccountRoles")
-                        .HasForeignKey("Account_ID");
+                        .HasForeignKey("AccountID");
 
                     b.HasOne("API.Models.Role", "Role")
                         .WithMany("AccountRoles")
-                        .HasForeignKey("Role_ID");
+                        .HasForeignKey("RoleID");
 
                     b.Navigation("Account");
 
@@ -255,47 +282,52 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("Department_ID");
+                        .HasForeignKey("DepartmentID");
 
                     b.HasOne("API.Models.Employee", "Manager")
                         .WithMany("Employees")
-                        .HasForeignKey("Manager_ID");
+                        .HasForeignKey("ManagerID");
+
+                    b.HasOne("API.Models.OvertimeLimit", "OvertimeLimit")
+                        .WithMany("Employees")
+                        .HasForeignKey("OvertimeLimitID");
 
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("OvertimeLimit");
                 });
 
-            modelBuilder.Entity("API.Models.EmployeeOvertimeSchedule", b =>
+            modelBuilder.Entity("API.Models.FinanceValidation", b =>
                 {
-                    b.HasOne("API.Models.Employee", "Employee")
-                        .WithMany("EmployeeOvertimeSchedules")
-                        .HasForeignKey("NIK");
-
-                    b.HasOne("API.Models.OvertimeSchedule", "OvertimeSchedule")
-                        .WithMany("EmployeeOvertimeSchedules")
-                        .HasForeignKey("OvertimeSchedule_ID")
+                    b.HasOne("API.Models.OvertimeRequest", "OvertimeRequest")
+                        .WithOne("FinanceValidation")
+                        .HasForeignKey("API.Models.FinanceValidation", "OvertimeRequestID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
-
-                    b.Navigation("OvertimeSchedule");
+                    b.Navigation("OvertimeRequest");
                 });
 
-            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
+            modelBuilder.Entity("API.Models.ManagerApproval", b =>
                 {
-                    b.HasOne("API.Models.OvertimeBonus", "OvertimeBonus")
+                    b.HasOne("API.Models.OvertimeRequest", "OvertimeRequest")
+                        .WithOne("ManagerApproval")
+                        .HasForeignKey("API.Models.ManagerApproval", "OvertimeRequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OvertimeRequest");
+                });
+
+            modelBuilder.Entity("API.Models.OvertimeRequest", b =>
+                {
+                    b.HasOne("API.Models.Employee", "Employee")
                         .WithMany("OvertimeSchedules")
-                        .HasForeignKey("OvertimeBonus_ID");
+                        .HasForeignKey("NIK");
 
-                    b.HasOne("API.Models.Overtime", "Overtime")
-                        .WithMany("OvertimeSchedules")
-                        .HasForeignKey("Overtime_ID");
-
-                    b.Navigation("Overtime");
-
-                    b.Navigation("OvertimeBonus");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("API.Models.Account", b =>
@@ -312,24 +344,21 @@ namespace API.Migrations
                 {
                     b.Navigation("Account");
 
-                    b.Navigation("EmployeeOvertimeSchedules");
+                    b.Navigation("Employees");
 
+                    b.Navigation("OvertimeSchedules");
+                });
+
+            modelBuilder.Entity("API.Models.OvertimeLimit", b =>
+                {
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("API.Models.Overtime", b =>
+            modelBuilder.Entity("API.Models.OvertimeRequest", b =>
                 {
-                    b.Navigation("OvertimeSchedules");
-                });
+                    b.Navigation("FinanceValidation");
 
-            modelBuilder.Entity("API.Models.OvertimeBonus", b =>
-                {
-                    b.Navigation("OvertimeSchedules");
-                });
-
-            modelBuilder.Entity("API.Models.OvertimeSchedule", b =>
-                {
-                    b.Navigation("EmployeeOvertimeSchedules");
+                    b.Navigation("ManagerApproval");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>

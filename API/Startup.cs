@@ -36,11 +36,11 @@ namespace API
             services.AddScoped<AccountRepository>();
             services.AddScoped<AccountRoleRepository>();
             services.AddScoped<DepartmentRepository>();
-            services.AddScoped<EmployeeOvertimeScheduleRepository>();
             services.AddScoped<EmployeeRepository>();
+            services.AddScoped<ManagerApprovalRepository>();
             services.AddScoped<OvertimeBonusRepository>();
-            services.AddScoped<OvertimeRepository>();
-            services.AddScoped<OvertimeScheduleRepository>();
+            services.AddScoped<OvertimeLimitRepository>();
+            services.AddScoped<OvertimeRequestRepository>();
             services.AddScoped<RoleRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API"))); //untuk manggil apsettings.json
